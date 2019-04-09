@@ -1,0 +1,77 @@
+#spring
+spring:
+  freemarker:
+    allow-request-override: false #页面热加载
+    suffix: .html
+    expose-spring-macro-helpers: false
+    cache: false
+    charset: UTF-8
+    check-template-location: true
+    content-type: text/html
+    expose-request-attributes: true
+    expose-session-attributes: true
+    request-context-attribute: request
+  servlet:
+    multipart:
+      max-file-size: 2048Mb
+      max-request-size: 2048Mb
+  http:
+    encoding:
+      force: true
+      charset: UTF-8
+      enabled: true
+  thymeleaf:
+    prefix: classpath:/templates/
+  datasource:
+    username: root
+    driverClassName: com.mysql.jdbc.Driver
+    password: %#$123456jijia
+    url: jdbc:mysql://localhost:3306/jijia?useUnicode=true&characterEncoding=utf8
+  mvc:
+    static-path-pattern: /**
+  resources:
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:${web.file-path}
+  application:
+    name: system-user
+web:
+  file-path: file:/home/
+#服务
+server:
+#  max-http-header-size: 10240000  #解决java.lang.IllegalArgumentException: Request header is too large
+#  connectionTimeout: 180000 #解决上传大文件总报错 java.io.EOFException: Unexpected EOF read on the socket
+  port: 8015
+#  ssl:
+#    key-store: classpath:keystore.p12
+#    key-store-password: baiyajin
+#    key-store-type: PKCS12
+#    key-alias: tomcat
+#  ssl:
+#    key-store: /home/cherry.keystore
+#    key-store-password: baiyajin
+#    key-alias: cherry
+  tomcat:
+    uri-encoding: UTF-8
+#  servlet:
+#    context-path: /baiyajin
+#mybatis plus 设置
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  typeAliasesPackage: com.baiyajin.systemuser.entity #实体扫描，多个package用逗号或者分号分隔
+  global-config.refresh-mapper: true #刷新mapper 调试神器
+#logging日志
+logging:
+  level:
+    com.business: DEBUG
+  config: classpath:logback.xml #实体扫描，多个package用逗号或者分号分隔
+
+#spring cloud配置
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+
+
+
+
+
+
