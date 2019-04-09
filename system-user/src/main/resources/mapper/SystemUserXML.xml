@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.baiyajin.systemuser.mapper.SystemUserMapper">
+
+
+    <select id="loadSystemUserList" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT DISTINCT
+        cu.id,
+        cu.name,
+        cu.phone,
+        cu.password,
+        cu.userTypeID,
+        cu.statusID,
+
+        cu.updateTime,
+        cu.createTime
+
+        from sys_user as su
+        left join sys_status as cs on su.statusID = cs.statusID
+        left join sys_user_type as cut on cut.userTypeID = su.userTypeID
+        <where>
+
+            <if test="name !=null and name != ''">
+                and su.name = #{name}
+            </if>
+            <if test="phone !=null and phone != ''">
+                and su.phone = #{phone}
+            </if>
+
+
+
+        </where>
+        GROUP BY su.id,cs.statusID,cut.userTypeID
+    </select>
+
+
+</mapper>
