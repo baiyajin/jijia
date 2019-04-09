@@ -13,8 +13,8 @@ spring:
     request-context-attribute: request
   servlet:
     multipart:
-      max-file-size: 2048Mb
-      max-request-size: 2048Mb
+      max-file-size: 2048
+      max-request-size: 2048
   http:
     encoding:
       force: true
@@ -25,7 +25,7 @@ spring:
   datasource:
     username: root
     driverClassName: com.mysql.jdbc.Driver
-    password: %#$123456jijia
+    password: '%#$123456jijia'
     url: jdbc:mysql://localhost:3306/jijia?useUnicode=true&characterEncoding=utf8
   mvc:
     static-path-pattern: /**
