@@ -5,6 +5,7 @@ import com.baiyajin.systemuser.service.SystemUserInterface;
 import com.baiyajin.systemuser.util.ConversionBetweenObjectsAndMaps;
 import com.baiyajin.systemuser.util.HashSalt;
 import com.baiyajin.systemuser.util.PhoneUtils;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,6 +34,7 @@ public class SystemUserController {
 
         Map<String,Object> m = new HashMap<>();
         List<Map<String,Object>> list = new ArrayList<>();
+
 
         try {
 
@@ -80,6 +82,9 @@ public class SystemUserController {
             return list;
         }
     }
+
+
+
 
 
 

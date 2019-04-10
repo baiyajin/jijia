@@ -24,9 +24,9 @@ spring:
     prefix: classpath:/templates/
   datasource:
     username: root
-    driverClassName: com.mysql.jdbc.Driver
+#    driverClassName: com.mysql.cj.jdbc.Driver
     password: '%#$123456jijia'
-    url: jdbc:mysql://localhost:3306/jijia?useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://localhost:3306/jijia?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8
   mvc:
     static-path-pattern: /**
   resources:
@@ -53,11 +53,7 @@ server:
     uri-encoding: UTF-8
 #  servlet:
 #    context-path: /baiyajin
-#mybatis plus 设置
-mybatis-plus:
-  mapper-locations: classpath:mapper/*.xml
-  typeAliasesPackage: com.baiyajin.systemuser.entity #实体扫描，多个package用逗号或者分号分隔
-  global-config.refresh-mapper: true #刷新mapper 调试神器
+
 #logging日志
 logging:
   level:
@@ -69,6 +65,12 @@ eureka:
   client:
     register-with-eureka: false
     fetch-registry: false
+
+#mybatis plus 设置
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  typeAliasesPackage: com.baiyajin.systemuser.entity #实体扫描，多个package用逗号或者分号分隔
+  global-config.refresh-mapper: true #刷新mapper 调试神器
 
 
 

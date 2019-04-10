@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="/static/Vue/vue.js"></script>
+    <script src="/static/Vue/axios.min.js"></script>
+
+</head>
+<body>
+    <input type="button" value="测试" onclick="created()" />
+    <script>
+
+        function created(){
+            console.log(2);
+            axios({
+                method: 'post',
+                url: '/SystemUserController/login',
+                data: {
+                    phone: '15288102051',
+                    password: '1'
+                }
+            }).then(function (response) {
+                console.log(response)
+            }).catch(function (error) {
+                    console.log(error)
+                })
+        }
+    </script>
+</body>
+</html>
