@@ -28,13 +28,13 @@ public class Swagger2 {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 //页面标题
-                .title("Spring Boot使用 Swagger2 构建RestFul API")
+                .title("后台API")
                 //创建人
-                .contact(new Contact("Spring Boot","http://localhost:8015/swagger-ui.html","MyBatis"))
+                .contact(new Contact("Spring Boot","swagger-ui.html","MyBatis"))
                 //版本号
                 .version("1.0")
                 //描述
-                .description("项目模块接口文档")
+                .description("后台数据接口")
                 .build();
     }
 }

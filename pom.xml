@@ -9,4 +9,11 @@
     <version>1.0-SNAPSHOT</version>
 
 
+    <properties>
+        <java.version>1.8</java.version>
+        <spring-cloud.version>Greenwich.SR1</spring-cloud.version>
+    </properties>
+
+
+
 </project>
