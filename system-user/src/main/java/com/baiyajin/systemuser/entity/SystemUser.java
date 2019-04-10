@@ -14,7 +14,7 @@ public class SystemUser {
   private String phone;
   private String password;
   private String statusID;
-  private String userTypeID;
+  private String userTypeID; //123
 
 
   private Timestamp createTime;
