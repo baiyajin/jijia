@@ -12,12 +12,8 @@ public class SystemUserType {
   private String name;
   private String jurisdictionID;
   private String statusID;
-
-
   private Timestamp createTime;
   private Timestamp updateTime;
-
-
 
 
 }

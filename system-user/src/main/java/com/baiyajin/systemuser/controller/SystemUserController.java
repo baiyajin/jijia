@@ -2,10 +2,12 @@ package com.baiyajin.systemuser.controller;
 
 import com.baiyajin.systemuser.entity.SystemUser;
 import com.baiyajin.systemuser.service.SystemUserInterface;
+import com.baiyajin.systemuser.util.*;
 import com.baiyajin.systemuser.util.ConversionBetweenObjectsAndMaps;
 import com.baiyajin.systemuser.util.HashSalt;
 import com.baiyajin.systemuser.util.PhoneUtils;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.Timestamp;
 import java.util.*;
 
 @Controller
@@ -22,6 +25,84 @@ public class SystemUserController {
 
     @Autowired
     private SystemUserInterface systemUserInterface;
+
+    /**
+     * 增加用户
+     * @param systemUser
+     * @return
+     */
+    @RequestMapping(value = "/addSysUser",method = RequestMethod.POST)
+    @Transactional(rollbackFor = Exception.class)
+    @ResponseBody
+    public Object addSysUser(SystemUser systemUser){
+        systemUser.setId(IdGenerate.uuid());
+        if (StringUtils.isNotBlank(systemUser.getPassword())){
+            systemUser.setPassword(PasswordUtils.enPassword(systemUser.getPassword()));
+        }
+        systemUser.setStatusID("qy");
+        systemUser.setCreateTime(new Timestamp(System.currentTimeMillis()));
+        systemUser.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+        try {
+            systemUserInterface.insert(systemUser);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Results(1,"fail");
+        }
+        return new Results(0,"success");
+    }
+
+    /**
+     * 删除用户，逻辑删除
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/deleteSysUser",method = RequestMethod.PUT)
+    @Transactional(rollbackFor = Exception.class)
+    @ResponseBody
+    public Object deleteSysUser(String id){
+        SystemUser systemUser = systemUserInterface.selectById(id);
+        if (null == systemUser){
+            return new Results(0,"该用户不存在");
+        }
+        systemUser.setId(id);
+        systemUser.setStatusID("jy");
+
+        try {
+            systemUserInterface.updateById(systemUser);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Results(1,"fail");
+        }
+        return new Results(0,"success");
+    }
+
+    /**
+     * 修改用户
+     * @param systemUser
+     * @return
+     */
+    @RequestMapping(value = "/updateSysUser",method = RequestMethod.PUT)
+    @Transactional(rollbackFor = Exception.class)
+    @ResponseBody
+    public Object updateSysUser(SystemUser systemUser){
+        String id = systemUser.getId();
+        SystemUser s = systemUserInterface.selectById(id);
+        if (s == null) {
+            return new Results(1,"该用户不存在");
+        }
+            String password = systemUser.getPassword();
+            if (StringUtils.isNotBlank(password)){
+                systemUser.setPassword(PasswordUtils.enPassword(password));
+            }
+
+        try {
+            systemUserInterface.updateById(systemUser);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Results(1,"fail");
+        }
+        return new Results(0,"success");
+    }
 
 
 
@@ -83,13 +164,30 @@ public class SystemUserController {
         }
     }
 
+    /**
+     * 查询后台用户列表
+     * @return
+     */
+    @RequestMapping(value = "/findSysUserList",method = RequestMethod.GET)
+    @ResponseBody
+    public List<SystemUser> findSysUserList(){
+        SystemUser systemUser = new SystemUser();
+        systemUser.setStatusID("qy");
+        List<SystemUser> systemUserList = systemUserInterface.selectList(new EntityWrapper<SystemUser>(systemUser));
+        return systemUserList;
+    }
 
-
-
-
-
-
-
+    /**
+     * 根据用户ID查询用户
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/findSysUserById")
+    @ResponseBody
+    public SystemUser findSysUserById(String id){
+        SystemUser systemUser = systemUserInterface.selectById(id);
+        return  systemUser;
+    }
 
 }
 

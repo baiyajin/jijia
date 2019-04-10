@@ -13,16 +13,14 @@ public class SystemUser {
   private String name;
   private String phone;
   private String password;
-  private String statusID;
-  private String userTypeID; //123
+  private String statusID;  //0代表正常，1代表删除
+  private String userTypeID;
 
 
   private Timestamp createTime;
   private Timestamp updateTime;
 
-
-
-  @Override
+    @Override
   public int hashCode() {
     return Objects.hash(name, id);
   }

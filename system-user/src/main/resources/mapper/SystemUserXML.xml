@@ -11,24 +11,18 @@
         cu.password,
         cu.userTypeID,
         cu.statusID,
-
         cu.updateTime,
         cu.createTime
-
         from sys_user as su
         left join sys_status as cs on su.statusID = cs.statusID
         left join sys_user_type as cut on cut.userTypeID = su.userTypeID
         <where>
-
             <if test="name !=null and name != ''">
                 and su.name = #{name}
             </if>
             <if test="phone !=null and phone != ''">
                 and su.phone = #{phone}
             </if>
-
-
-
         </where>
         GROUP BY su.id,cs.statusID,cut.userTypeID
     </select>
