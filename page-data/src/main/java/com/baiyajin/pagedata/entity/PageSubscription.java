@@ -3,27 +3,22 @@ package com.baiyajin.pagedata.entity;
 import com.baomidou.mybatisplus.annotations.TableName;
 import lombok.Data;
 
-import java.math.BigDecimal;
 import java.sql.Timestamp;
 
-
 @Data
-@TableName("page_material")
-public class PageMaterial {
+@TableName("page_subscription")
+public class PageSubscription {
   private String id;
-  private String name;
-  private BigDecimal price;
-  private BigDecimal exponent;
-  private BigDecimal tongbi;
-  private BigDecimal huanbi;
-  private String materialClassID;
+  private String titel;
+  private String materialID;
+  private String areaID;
+  private String time;
+  private String userID;
   private String statusID;
-
 
 
   private Timestamp createTime;
   private Timestamp updateTime;
-
 
 
 
