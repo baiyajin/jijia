@@ -24,8 +24,6 @@ public class SystemUserController {
     private SystemUserInterface systemUserInterface;
 
 
-
-
     /*登录*/
     @RequestMapping(value = "/login", method = {RequestMethod.POST}, produces = "application/json;charset=UTF-8")
     @Transactional(rollbackFor = Exception.class)
