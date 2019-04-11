@@ -25,8 +25,9 @@ spring:
   datasource:
     username: root
 #    driverClassName: com.mysql.cj.jdbc.Driver
-    password: '%#$123456jijia'
-    url: jdbc:mysql://localhost:3306/jijia?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8
+    #password: '%#$123456jijia'
+    password: root
+    url: jdbc:mysql://localhost:3306/test?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8
 #    url: jdbc:mysql://192.168.74.111:3306/jijia?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8
   mvc:
     static-path-pattern: /**
