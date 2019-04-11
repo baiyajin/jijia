@@ -216,6 +216,36 @@
 			<!--<scope>provided</scope>-->
 			<scope>compile</scope>
 		</dependency>
+        <dependency>
+            <groupId>com.baiyajin</groupId>
+            <artifactId>system-user</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+		<dependency>
+			<groupId>com.baiyajin</groupId>
+			<artifactId>system-user</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.baiyajin</groupId>
+			<artifactId>system-user</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.baiyajin</groupId>
+			<artifactId>system-user</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.baiyajin</groupId>
+			<artifactId>system-user</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>compile</scope>
+		</dependency>
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
