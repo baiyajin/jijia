@@ -2,7 +2,38 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.baiyajin.pagedata.mapper.PageMaterialMapper">
 
+    <resultMap  type="com.baiyajin.pagedata.entity.MaterialAndClass"  id="MaterialAndClass">
+        <id column="id"  property="id"></id>
+        <result column="name" property="name"></result>
+        <result column="statusID" property="statusID"></result>
+        <result column="createTime" property="createTime"></result>
+        <result column="updateTime" property="updateTime"></result>
+        <collection column="materialClassID" property="childrenList"
+                    ofType="com.baiyajin.pagedata.entity.PageMaterial">
+            <id column="mid"  property="id"></id>
+            <result column="mname" property="name"></result>
+            <result column="price" property="price"></result>
+            <result column="tongbi" property="tongbi"></result>
+            <result column="areaID" property="areaID"></result>
+            <result column="materialClassID" property="materialClassID"></result>
+            <result column="statusID" property="statusID"></result>
+            <result column="createTime" property="createTime"></result>
+            <result column="updateTime" property="updateTime"></result>
+        </collection>
+    </resultMap>
 
+    <select id="getMaterialsAndClass" parameterType="java.util.Map" resultMap="MaterialAndClass">
+      select * from page_material_class m
+        left join
+        (select *,id as mid,name as mname from
+        page_material) i
+        on m.id = i.materialClassID
+        <where>
+            <if test="id!=null">
+                m.id = #{id}
+            </if>
+        </where>
+    </select>
 
 
 
