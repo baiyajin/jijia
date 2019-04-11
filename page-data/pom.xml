@@ -243,9 +243,14 @@
 			<artifactId>commons-lang</artifactId>
 			<version>2.6</version>
 		</dependency>
+        <dependency>
+            <groupId>com.baiyajin</groupId>
+            <artifactId>system-user</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
 
 
-	</dependencies>
+    </dependencies>
 
 	<dependencyManagement>
 		<dependencies>
