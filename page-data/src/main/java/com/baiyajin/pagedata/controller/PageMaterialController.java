@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,15 +27,11 @@ public class PageMaterialController {
     @Autowired
     private PageMaterialInterface pageMaterialInterface;
 
-    @Autowired
-    private PageMaterialClassInterface pageMaterialClassInterface;
-
 
     @RequestMapping(value = "/getMaterials", method = {RequestMethod.POST}, produces = "application/json;charset=UTF-8")
     @Transactional(rollbackFor = Exception.class)
     @ResponseBody
     public List<PageMaterial> getMaterials(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String,Object> map) {
-
         Map<String,Object> pMap = new HashMap<String,Object>();
         pMap.put("id",map.get("id"));
         List<PageMaterial> PageMaterialList = pageMaterialInterface.selectByMap(pMap);
@@ -42,18 +39,11 @@ public class PageMaterialController {
 
     }
 
-
     @RequestMapping(value = "/getMaterialsAndClass", method = {RequestMethod.POST}, produces = "application/json;charset=UTF-8")
     @Transactional(rollbackFor = Exception.class)
     @ResponseBody
-    public MaterialAndClass getMaterialsAndClass(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String,Object> map) {
-        String id = map.get("id").toString();
-        PageMaterialClass pageMaterialClass = pageMaterialClassInterface.selectById(id);
-        map.clear();
-        map.put("materialClassID",id);
-        List<PageMaterial> PageMaterialList = pageMaterialInterface.selectByMap(map);
-        MaterialAndClass materialAndClass = new MaterialAndClass(pageMaterialClass,PageMaterialList);
-        return materialAndClass;
+    public List<MaterialAndClass> getMaterialsAndClass(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String,Object> map) {
+        return pageMaterialInterface.getMaterialsAndClass(map);
     }
 
 
