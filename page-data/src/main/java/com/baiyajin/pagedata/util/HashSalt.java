@@ -14,13 +14,13 @@ public class HashSalt {
         String hashSalt = HashSalt.getMD5(salt);
         String ecPassWord = new SimpleHash("SHA-1", "love", hashSalt).toString();
 
-        System.out.println("---ecPassWord--------" + ecPassWord);
+        /*System.out.println("---ecPassWord--------" + ecPassWord);
         System.out.println("---hashSalt--------" + hashSalt);
         System.out.println("---salt--------" + salt);
 
         System.out.println("密文：" + encode(15288102051L));
         System.out.println("原文：" + decode(encode(15288102051L)));
-        System.out.println("原文：" + decode(salt));
+        System.out.println("原文：" + decode(salt));*/
     }
 
     /**
