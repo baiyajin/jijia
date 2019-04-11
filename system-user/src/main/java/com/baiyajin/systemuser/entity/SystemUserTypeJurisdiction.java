@@ -4,12 +4,10 @@ import com.baomidou.mybatisplus.annotations.TableName;
 import lombok.Data;
 
 import java.sql.Timestamp;
-import java.util.Map;
-import java.util.Objects;
 
 @Data
 @TableName("sys_jurisdiction")
-public class SystemJurisdiction {
+public class SystemUserTypeJurisdiction {
   private String id;
   private String name;
   private String urlAddress;
@@ -18,7 +16,7 @@ public class SystemJurisdiction {
   private Timestamp updateTime;
 
 
-  public SystemJurisdiction(String name,String urlAddress){
+  public SystemUserTypeJurisdiction(String name, String urlAddress){
     this.name=name;
     this.urlAddress = urlAddress;
     long timestamp = System.currentTimeMillis();
@@ -26,16 +24,8 @@ public class SystemJurisdiction {
     this.updateTime = new Timestamp(timestamp);
   }
 
-  public SystemJurisdiction(Map<String,Object> map){
-      this.id = map.get("id")==null?null:map.get("id").toString();
-      this.name= map.get("name")==null?null:map.get("name").toString();
-      this.urlAddress= map.get("urlAddress")==null?null:map.get("urlAddress").toString();
-      this.updateTime = new Timestamp(System.currentTimeMillis());
-  }
 
-  public SystemJurisdiction(){
 
-  }
 
 
 }
