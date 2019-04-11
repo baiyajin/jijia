@@ -19,8 +19,7 @@ public class PageMaterial {
   private String materialClassID;
   private String statusID;
 
-  private Date startTime;
-  private Date endTime;
+
 
 
   private Timestamp createTime;
