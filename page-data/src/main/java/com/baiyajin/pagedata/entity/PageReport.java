@@ -14,6 +14,7 @@ public class PageReport {
   private String content;
   private String mark;
   private String statusID;
+  private String userID;
 
 
   private Timestamp createTime;
