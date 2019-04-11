@@ -18,5 +18,5 @@ public interface PageMaterialInterface extends IService<PageMaterial> {
      */
     List<MaterialVo> findByTime(MaterialVo materialVo);
 
-    public List<MaterialAndClass> getMaterialsAndClass(Map<String,Object> map);
+    List<MaterialAndClass> getMaterialsAndClass(Map<String,Object> map);
 }
