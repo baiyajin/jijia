@@ -13,9 +13,9 @@ public class PageMaterial {
   private String id;
   private String name;
   private BigDecimal price;
-  private int exponent;
-  private int tongbi;
-  private int huanbi;
+  private BigDecimal exponent;
+  private BigDecimal tongbi;
+  private BigDecimal huanbi;
   private String materialClassID;
   private String statusID;
 
