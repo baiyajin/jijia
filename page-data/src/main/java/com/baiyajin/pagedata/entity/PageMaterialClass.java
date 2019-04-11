@@ -10,7 +10,6 @@ import java.sql.Timestamp;
 public class PageMaterialClass {
   private String id;
   private String name;
-  private String areaID;
   private String statusID;
 
 
