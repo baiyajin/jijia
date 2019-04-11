@@ -27,7 +27,13 @@ public class PageMaterialController {
     @Autowired
     private PageMaterialInterface pageMaterialInterface;
 
-
+    /**
+     * 获取材料信息
+     * @param request
+     * @param response
+     * @param map id 材料id
+     * @return
+     */
     @RequestMapping(value = "/getMaterials", method = {RequestMethod.POST}, produces = "application/json;charset=UTF-8")
     @Transactional(rollbackFor = Exception.class)
     @ResponseBody
@@ -36,9 +42,15 @@ public class PageMaterialController {
         pMap.put("id",map.get("id"));
         List<PageMaterial> PageMaterialList = pageMaterialInterface.selectByMap(pMap);
         return PageMaterialList;
-
     }
 
+    /**
+     * 获取材料分类及分类下的材料信息
+     * @param request
+     * @param response
+     * @param map id 材料分类id [不传则返回所以分类]
+     * @return
+     */
     @RequestMapping(value = "/getMaterialsAndClass", method = {RequestMethod.POST}, produces = "application/json;charset=UTF-8")
     @Transactional(rollbackFor = Exception.class)
     @ResponseBody

@@ -32,8 +32,15 @@
             <if test="id!=null">
                 m.id = #{id}
             </if>
+            <if test="areaID!=null">
+                areaID = #{areaID}
+            </if>
+            <if test="areaID!=null">
+                areaID = #{areaID}
+            </if>
         </where>
     </select>
+
 
 
 

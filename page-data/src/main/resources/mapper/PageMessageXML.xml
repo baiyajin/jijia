@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.baiyajin.pagedata.mapper.PageMessageMapper">
+
+
+
+    <select id="getMessage" parameterType="java.util.Map" resultType="java.util.Map">
+        select *  from page_message
+    </select>
+
+
+
+    <select id="selectCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(*) as num from page_message
+        where userId = #{userId}
+        <if test="id!=null">
+            and id = #{id}
+        </if>
+        <if test="materialID!=null">
+            and materialID = #{materialID}
+        </if>
+        <if test="areaID!=null">
+            and areaID = #{areaID}
+        </if>
+        <if test="statusID!=null">
+            and statusID = #{statusID}
+        </if>
+
+    </select>
+
+</mapper>
