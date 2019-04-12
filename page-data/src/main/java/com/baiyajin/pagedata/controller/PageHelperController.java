@@ -8,6 +8,7 @@ import com.baiyajin.pagedata.vo.HelperVo;
 import com.baiyajin.pagedata.vo.Page;
 import com.baiyajin.pagedata.vo.ReportVo;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -149,6 +150,7 @@ public class PageHelperController {
     @ResponseBody
     public Object getArtInfo(String id){
         PageHelper pageHelper = pageHelperInterface.selectById(id);
+        pageHelper.setContent(StringEscapeUtils.escapeHtml(pageHelper.getContent()));
         if (pageHelper == null){
             return new Results(1,"没有该文章");
         }
