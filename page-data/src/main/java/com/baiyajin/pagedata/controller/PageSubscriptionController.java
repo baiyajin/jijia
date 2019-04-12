@@ -4,7 +4,9 @@ import com.baiyajin.pagedata.entity.PageSubscription;
 import com.baiyajin.pagedata.service.PageSubscriptionInterface;
 import com.baiyajin.pagedata.utils.IdGenerate;
 import com.baiyajin.pagedata.utils.Results;
-import com.baomidou.mybatisplus.plugins.Page;
+import com.baiyajin.pagedata.vo.Page;
+import com.baiyajin.pagedata.vo.SubscriptionVo;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.text.html.parser.Entity;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
@@ -56,25 +59,55 @@ public class PageSubscriptionController {
         return new Results(0,"success");
     }
 
+
+    /**
+     * 删除订阅
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/delete",method = RequestMethod.PUT)
+    @ResponseBody
+    public Object delete(String id){
+        PageSubscription pageSubscription = new PageSubscription();
+        pageSubscription.setId(id);
+        pageSubscription.setStatusID("jy");
+        try {
+            pageSubscriptionInterface.updateById(pageSubscription);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Results(1,"fail");
+        }
+        return new Results(0,"success");
+    }
+
     /**
      * 分页查询订阅消息
-     * @param pageSubscription
+     * @param subscriptionVo
      * @param pageNum
      * @param pageSize
      * @return
      */
-    @RequestMapping(value = "/findPage",method = RequestMethod.GET)
+    @RequestMapping(value = "/findPage",method = RequestMethod.POST)
     @ResponseBody
-    public Object findPage(PageSubscription pageSubscription,String pageNum,String pageSize){
-        Page<PageSubscription> p = new Page<>();
+    public Object findPage(SubscriptionVo subscriptionVo,String pageNum,String pageSize){
+        Page<SubscriptionVo> p = new Page<>();
         if (StringUtils.isNotBlank(pageNum) && StringUtils.isNotBlank(pageSize)){
-            p.setCurrent(Integer.valueOf(pageNum));
-            p.setSize(Integer.valueOf(pageSize));
+            p.setPageNo(Integer.valueOf(pageNum));
+            p.setPageSize(Integer.valueOf(pageSize));
         }else {
-            p.setSize(10);
-            p.setCurrent(0);
+            p.setPageSize(10);
+            p.setPageNo(0);
         }
-        Page<PageSubscription> page = pageSubscriptionInterface.selectPage(p);
+//        Page<PageSubscription> page = pageSubscriptionInterface.selectPage(p);
+        PageSubscription pageSubscription = new PageSubscription();
+        String number = subscriptionVo.getNumber();
+        pageSubscription.setNumber(number);
+        int count = pageSubscriptionInterface.selectCount(new EntityWrapper<>(pageSubscription));
+        Page<SubscriptionVo> page = pageSubscriptionInterface.findList(p,subscriptionVo);
+        if (page == null || page.getList() == null ||page.getList().size() == 0){
+            return new Results(1,"暂无数据");
+        }
+        page.setCount(count);
         return page;
     }
 

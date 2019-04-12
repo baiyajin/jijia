@@ -1,6 +1,7 @@
 package com.baiyajin.pagedata.entity;
 
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.plugins.Page;
 import lombok.Data;
 
 import java.sql.Timestamp;

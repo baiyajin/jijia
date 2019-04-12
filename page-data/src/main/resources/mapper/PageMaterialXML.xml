@@ -12,13 +12,17 @@
         a.tongbi AS "tb",
         a.huanbi as "hb",
         a.exponent as "zs",
+        a.areaID as "areaId",
         b.`name` as "add"
         FROM page_material a
         LEFT JOIN page_area b ON  b.id = a.areaID
         <where>
             a.statusID = 'qy'
             <if test="cateId !=null and cateId != ''">
-                and a.areaID = #{cateId}
+                and FIND_IN_SET(#{cateId},a.materialClassID)
+            </if>
+            <if test="areaID !=null and areaID != ''">
+                and FIND_IN_SET(#{areaID},a.areaID)
             </if>
             <if test="startTime !=null and endTime != null">
                 AND a.createTime BETWEEN STR_TO_DATE(#{startTime},'%Y-%m') AND STR_TO_DATE(#{endTime},'%Y-%m')

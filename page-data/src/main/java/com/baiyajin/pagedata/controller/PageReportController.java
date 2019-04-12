@@ -4,8 +4,9 @@ import com.baiyajin.pagedata.entity.PageReport;
 import com.baiyajin.pagedata.service.PageReportInterface;
 import com.baiyajin.pagedata.utils.IdGenerate;
 import com.baiyajin.pagedata.utils.Results;
+import com.baiyajin.pagedata.vo.Page;
+import com.baiyajin.pagedata.vo.ReportVo;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.plugins.Page;
 import io.swagger.models.auth.In;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
@@ -114,34 +115,50 @@ public class PageReportController {
 
     /**
      * 分页查询报告
-     * @param pageReport
+     * @param reportVo
      * @param pageNum
      * @param pageSize
      * @return
      */
-    @RequestMapping(value = "/findListByPage",method = RequestMethod.GET)
+    @RequestMapping(value = "/findListByPage",method = RequestMethod.POST)
     @ResponseBody
-    public Object findListByPage(PageReport pageReport,String pageNum,String pageSize){
-        Page<PageReport> p = new Page();
+    public Object findListByPage(ReportVo reportVo,String pageNum,String pageSize){
+        Page<ReportVo> p = new Page();
         if (StringUtils.isNotBlank(pageNum)&&StringUtils.isNotBlank(pageSize)){
-            p.setCurrent(Integer.valueOf(pageNum));
-            p.setSize(Integer.valueOf(pageSize));
+            p.setPageNo(Integer.valueOf(pageNum));
+            p.setPageSize(Integer.valueOf(pageSize));
         }else {
-            p.setSize(10);
-            p.setCurrent(0);
+            p.setPageSize(10);
+            p.setPageNo(0);
         }
-        Page<PageReport> page = pageReportInterface.selectPage(p);
+//        Page<PageReport> page = pageReportInterface.selectPage(p);
+        PageReport pageReport = new PageReport();
+        String type = reportVo.getType();
+        String userID = reportVo.getUserID();
+        pageReport.setType(type);
+        pageReport.setUserID(userID);
+        int count = pageReportInterface.selectCount(new EntityWrapper<PageReport>(pageReport));
+        Page<ReportVo> page = pageReportInterface.findList(p,reportVo);
+        if (page == null || page.getList() == null ||page.getList().size() == 0){
+            return new Results(1,"暂无数据");
+        }
+        page.setCount(count);
        return page;
     }
 
-    @RequestMapping(value = "/getReportById",method = RequestMethod.GET)
+    /**
+     * 获取报告详情
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/getReportById",method = RequestMethod.POST)
     @ResponseBody
     public Object getReportById(String id){
         PageReport pageReport = pageReportInterface.selectById(id);
         if (pageReport != null){
             pageReport.setContent(StringEscapeUtils.escapeHtml(pageReport.getContent()));
         }else {
-            return new Results(1,"改报告不存在");
+            return new Results(1,"该报告不存在");
         }
         return pageReport;
     }
