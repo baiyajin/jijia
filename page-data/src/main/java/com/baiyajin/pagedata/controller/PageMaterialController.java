@@ -1,5 +1,6 @@
 package com.baiyajin.pagedata.controller;
 
+import com.baiyajin.pagedata.entity.MaterialAndClass;
 import com.baiyajin.pagedata.entity.PageMaterial;
 import com.baiyajin.pagedata.service.PageMaterialInterface;
 import com.baiyajin.pagedata.utils.DateUtils;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -68,6 +70,26 @@ public class PageMaterialController {
         List<MaterialVo> materialVoList = pageMaterialInterface.findByTime(materialVo);
                 return materialVoList;
     }
+
+    @RequestMapping(value = "/getMaterials", method = {RequestMethod.POST}, produces = "application/json;charset=UTF-8")
+    @Transactional(rollbackFor = Exception.class)
+    @ResponseBody
+    public List<PageMaterial> getMaterials(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String,Object> map) {
+        Map<String,Object> pMap = new HashMap<String,Object>();
+        pMap.put("id",map.get("id"));
+        List<PageMaterial> PageMaterialList = pageMaterialInterface.selectByMap(pMap);
+        return PageMaterialList;
+
+    }
+
+    @RequestMapping(value = "/getMaterialsAndClass", method = {RequestMethod.POST}, produces = "application/json;charset=UTF-8")
+    @Transactional(rollbackFor = Exception.class)
+    @ResponseBody
+    public List<MaterialAndClass> getMaterialsAndClass(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String,Object> map) {
+        return pageMaterialInterface.getMaterialsAndClass(map);
+    }
+
+
 }
 
 
