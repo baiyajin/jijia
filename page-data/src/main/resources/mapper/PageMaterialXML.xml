@@ -32,13 +32,36 @@
             <if test="id!=null">
                 m.id = #{id}
             </if>
-            <if test="areaID!=null">
-                areaID = #{areaID}
+        </where>
+    </select>
+
+
+    <select id="findByTime" parameterType="com.baiyajin.pagedata.vo.MaterialVo" resultType="com.baiyajin.pagedata.vo.MaterialVo">
+        SELECT
+        DATE_FORMAT(a.createTime,'%Y.%m.%d') AS "time",
+        a.price AS "price",
+        a.tongbi AS "tb",
+        a.huanbi as "hb",
+        a.exponent as "zs",
+        b.`name` as "add"
+        FROM page_material a
+        LEFT JOIN page_area b ON  b.id = a.areaID
+        <where>
+            a.statusID = 'qy'
+            <if test="cateId !=null and cateId != ''">
+                and a.areaID = #{cateId}
             </if>
-            <if test="areaID!=null">
-                areaID = #{areaID}
+            <if test="startTime !=null and endTime != null">
+                AND a.createTime BETWEEN STR_TO_DATE(#{startTime},'%Y-%m') AND STR_TO_DATE(#{endTime},'%Y-%m')
+            </if>
+            <if test="season !=null and season != ''">
+                AND QUARTER(a.createTime)= #{season}
+            </if>
+            <if test="year !=null and year != ''">
+                AND year(a.createTime) = #{year}
             </if>
         </where>
+        order by time
     </select>
 
 

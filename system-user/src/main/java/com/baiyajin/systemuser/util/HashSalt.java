@@ -12,7 +12,7 @@ public class HashSalt{
     public static void main(String[] args) {
         String salt = HashSalt.encode(Long.parseLong("15288102051"));
         String hashSalt = HashSalt.getMD5(salt);
-        String ecPassWord = new SimpleHash("SHA-1", "love", hashSalt).toString();
+        String ecPassWord = new SimpleHash("SHA-1", "123", hashSalt).toString();
 
         System.out.println("---ecPassWord--------" + ecPassWord);
         System.out.println("---hashSalt--------" + hashSalt);

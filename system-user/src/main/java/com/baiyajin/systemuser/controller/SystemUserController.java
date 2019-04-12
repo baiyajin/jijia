@@ -105,22 +105,23 @@ public class SystemUserController {
     }
 
 
-    /*登录*/
+    /**
+     * 后台用户登录
+     * @param
+     * @return
+     */
     @RequestMapping(value = "/login", method = {RequestMethod.POST}, produces = "application/json;charset=UTF-8")
     @Transactional(rollbackFor = Exception.class)
     @ResponseBody
-    public List<Map<String,Object>> login(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String,Object> map) {
-
+    public Map<String,Object> login(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String,Object> map) {
         Map<String,Object> m = new HashMap<>();
-        List<Map<String,Object>> list = new ArrayList<>();
 
 
         try {
 
             if(null == map.get("password") && "" == map.get("password")){
-                m.put("return_message","密码不能为空");
-                list.add(m);
-                return list;
+                m.put("message","密码不能为空");
+                return m;
             }
 
             if(null != map.get("phone") && "" != map.get("phone") && PhoneUtils.isPhone(map.get("phone").toString())){
@@ -136,29 +137,68 @@ public class SystemUserController {
                 List<SystemUser> systemUsers = systemUserInterface.selectByMap(map);
 
                 if(systemUsers.size() > 0 && systemUsers.get(0).getPassword().equals(ecPassWord)){
-                    Map<String, Object> stringObjectMap = ConversionBetweenObjectsAndMaps.objectToMap(systemUsers);
-                    list.add(stringObjectMap);
-                    return list;
+                    m.put("message","登录成功");
+                    m.put("user",systemUsers.get(0));
+                    return m;
                 }else if(systemUsers.size() == 0){
-                    m.put("return_message","此用户名/手机号还没注册");
-                    list.add(m);
-                    return list;
+                    m.put("message","此手机号还没注册");
+                    return m;
                 }else if(!systemUsers.get(0).getPassword().equals(ecPassWord)){
-                    m.put("return_message","密码错误");
-                    list.add(m);
-                    return list;
+                    m.put("message","密码错误");
+                    return m;
                 }
             }
 
-            m.put("return_message","手机号格式不对");
-            list.add(m);
-            return list;
+            m.put("message","手机号格式不对");
+            return m;
 
         } catch (Exception e) {
             e.printStackTrace();
-            m.put("return_message",e.getMessage());
-            list.add(m);
-            return list;
+            m.put("message","异常"+e.getMessage());
+            return m;
+        }
+    }
+
+
+    /**
+     * 后台用户注册账号
+     * @param
+     * @return
+     */
+    @RequestMapping(value = "/registerAccount", method = {RequestMethod.POST}, produces = "application/json;charset=UTF-8")
+    @Transactional(rollbackFor = Exception.class)
+    @ResponseBody
+    public Map<String,Object> registerAccount(HttpServletRequest request, HttpServletResponse response, @RequestBody SystemUser user) {
+        Map<String,Object> m = new HashMap<>();
+        try {
+
+
+            Map<String, Object> objectObjectHashMap = new HashMap<>();
+            objectObjectHashMap.put("phone",user.getPhone());
+
+            List<SystemUser> systemUsers = systemUserInterface.selectByMap(objectObjectHashMap);
+
+
+            if (null == systemUsers || systemUsers.size() == 0) {
+                user.setId(UUID.randomUUID().toString().replace("-", ""));
+                user.setStatusID("jy");
+
+                String salt = HashSalt.encode(Long.parseLong(user.getPhone()));
+                String hashSalt = HashSalt.getMD5(salt);
+                String ecPassWord = new SimpleHash("SHA-1", user.getPassword(), hashSalt).toString();
+                user.setPassword(ecPassWord);
+
+                user.setCreateTime(new Timestamp(System.currentTimeMillis()));
+                systemUserInterface.insert(user);
+                m.put("message","注册成功");
+                return m;
+            }
+            m.put("message","此手机号已经被注册");
+            return m;
+        } catch (Exception e) {
+            e.printStackTrace();
+            m.put("message","程序异常"+e.getMessage());
+            return m;
         }
     }
 

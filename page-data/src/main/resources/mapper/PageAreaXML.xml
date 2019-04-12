@@ -3,10 +3,6 @@
 <mapper namespace="com.baiyajin.pagedata.mapper.PageAreaMapper">
 
 
-    <insert id="save"  parameterType="com.baiyajin.pagedata.entity.PageArea">
-
-
-    </insert>
 
 
 
