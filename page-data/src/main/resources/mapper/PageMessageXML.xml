@@ -4,8 +4,11 @@
 
 
 
-    <select id="getMessage" parameterType="java.util.Map" resultType="java.util.Map">
+    <select id="getMessage" parameterType="java.util.Map" resultType="com.baiyajin.pagedata.entity.PageMessage">
         select *  from page_message
+        where is_del = 0
+        and userId = #{userId}
+        limit #{pageNum},#{pageSize}
     </select>
 
 
@@ -25,7 +28,13 @@
         <if test="statusID!=null">
             and statusID = #{statusID}
         </if>
-
     </select>
+
+
+    <update id="deleteMessage" parameterType="java.util.Map">
+         update page_message set is_del = 1 where find_in_set(id,#{ids})
+    </update>
+
+
 
 </mapper>

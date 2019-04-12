@@ -33,4 +33,5 @@ public class PageArea {
     this.updateTime = new Timestamp(time);
   }
 
+
 }

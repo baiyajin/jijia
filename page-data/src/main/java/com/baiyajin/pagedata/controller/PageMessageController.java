@@ -27,7 +27,7 @@ public class PageMessageController {
     private PageMessageInterface pageMessageInterface;
 
     /**
-     *
+     * 8.	获取消息列表
      * @param request
      * @param response
      * @param map
@@ -36,29 +36,65 @@ public class PageMessageController {
     @RequestMapping(value = "/getMessage", method = {RequestMethod.POST}, produces = "application/json;charset=UTF-8")
     @Transactional(rollbackFor = Exception.class)
     @ResponseBody
-    public List<PageMessage> getMessage(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String,Object> map) {
+    public Map<String,Object> getMessage(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String,Object> map) {
+//        String token =  map.get("token").toString();
+        // TODO 验证token
+        String userId =  map.get("userId").toString();
+        Integer total = pageMessageInterface.selectCount(userId);
 
+        String pageNumS = map.get("pageNum").toString();
+        String pageSize =  map.get("pageSize").toString();
+        Integer pageNum = (1-Integer.parseInt(pageNumS)) * Integer.parseInt(pageSize);
+        map.put("pageNum",pageNum);
+        map.put("pageSize",Integer.parseInt(pageSize));
+        List<PageMessage> pageMessageList = pageMessageInterface.getMessage(map);
 
-        return pageMessageInterface.selectByMap(map);
-
-
+        Map<String,Object> reMap = new HashMap<String,Object>();
+        reMap.put("data",pageMessageList);
+        reMap.put("total",total);
+        reMap.put("pagepageNum",pageNumS);
+        return reMap;
 
     }
 
 
     /**
-     * 获取消息条数
+     * 8.	删除消息
      * @param request
      * @param response
      * @param map
      * @return
      */
-    @RequestMapping(value = "/getMessageCount", method = {RequestMethod.POST}, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/delMessage", method = {RequestMethod.POST}, produces = "application/json;charset=UTF-8")
     @Transactional(rollbackFor = Exception.class)
     @ResponseBody
-    public int getMessageCount(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String,Object> map) {
-        return  pageMessageInterface.selectCount(map);
+    public Map<String,Object> delMessage(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String,Object> map) {
+        String ids = map.get("ids").toString();
+        int i = pageMessageInterface.deleteMessage(ids);
+        Map<String,Object> reMap = new HashMap<String,Object>();
+        if(i>0){
+            reMap.put("success",true);
+            reMap.put("msg","操作成功");
+        }else{
+            reMap.put("success",false);
+            reMap.put("msg","操作失败");
+        }
+        return reMap;
     }
+
+//    /**
+//     * 获取消息条数
+//     * @param request
+//     * @param response
+//     * @param map
+//     * @return
+//     */
+//    @RequestMapping(value = "/getMessageCount", method = {RequestMethod.POST}, produces = "application/json;charset=UTF-8")
+//    @Transactional(rollbackFor = Exception.class)
+//    @ResponseBody
+//    public int getMessageCount(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String,Object> map) {
+//        return  pageMessageInterface.selectCount(map);
+//    }
 
 
 
