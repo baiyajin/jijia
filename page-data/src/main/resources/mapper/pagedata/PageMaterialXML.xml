@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.baiyajin.mapper.pagedata.PageMaterialMapper">
+
+    <resultMap type="com.baiyajin.entity.pagedata.MaterialAndClass" id="MaterialAndClass">
+        <id column="id"  property="id"></id>
+        <result column="name" property="name"></result>
+        <result column="statusID" property="statusID"></result>
+        <result column="createTime" property="createTime"></result>
+        <result column="updateTime" property="updateTime"></result>
+        <collection column="materialClassID" property="childrenList"
+                    ofType="com.baiyajin.entity.pagedata.PageMaterial">
+            <id column="mid"  property="id"></id>
+            <result column="mname" property="name"></result>
+            <result column="price" property="price"></result>
+            <result column="tongbi" property="tongbi"></result>
+            <result column="areaID" property="areaID"></result>
+            <result column="materialClassID" property="materialClassID"></result>
+            <result column="statusID" property="statusID"></result>
+            <result column="createTime" property="createTime"></result>
+            <result column="updateTime" property="updateTime"></result>
+        </collection>
+    </resultMap>
+
+    <select id="getMaterialsAndClass" parameterType="java.util.Map" resultMap="MaterialAndClass">
+      select * from page_material_class m
+        left join
+        (select *,id as mid,name as mname from
+        page_material) i
+        on m.id = i.materialClassID
+        <where>
+            <if test="id!=null">
+                m.id = #{id}
+            </if>
+        </where>
+    </select>
+
+
+    <select id="findByTime" parameterType="com.baiyajin.vo.pagedata.MaterialVo" resultType="com.baiyajin.vo.pagedata.MaterialVo">
+        SELECT
+        DATE_FORMAT(a.createTime,'%Y.%m.%d') AS "time",
+        a.price AS "price",
+        a.tongbi AS "tb",
+        a.huanbi as "hb",
+        a.exponent as "zs",
+        a.areaID as "areaId",
+        b.`name` as "add"
+        FROM page_material a
+        LEFT JOIN page_area b ON  b.id = a.areaID
+        <where>
+            a.statusID = 'qy'
+            <if test="cateId !=null and cateId != ''">
+                and FIND_IN_SET(#{cateId},a.materialClassID)
+            </if>
+            <if test="areaID !=null and areaID != ''">
+                and FIND_IN_SET(#{areaID},a.areaID)
+            </if>
+            <if test="startTime !=null and endTime != null">
+                AND a.createTime BETWEEN STR_TO_DATE(#{startTime},'%Y-%m') AND STR_TO_DATE(#{endTime},'%Y-%m')
+            </if>
+            <if test="season !=null and season != ''">
+                AND QUARTER(a.createTime)= #{season}
+            </if>
+            <if test="year !=null and year != ''">
+                AND year(a.createTime) = #{year}
+            </if>
+        </where>
+        order by time
+    </select>
+
+
+
+
+</mapper>

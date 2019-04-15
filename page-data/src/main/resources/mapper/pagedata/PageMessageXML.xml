@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.baiyajin.mapper.pagedata.PageMessageMapper">
+
+
+
+    <select id="getMessage" parameterType="java.util.Map" resultType="com.baiyajin.entity.pagedata.PageMessage">
+        select *  from page_message
+        where is_del = 0
+        and userId = #{userId}
+        limit #{pageNum},#{pageSize}
+    </select>
+
+
+
+    <select id="selectCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(*) as num from page_message
+        where userId = #{userId}
+        <if test="id!=null">
+            and id = #{id}
+        </if>
+        <if test="materialID!=null">
+            and materialID = #{materialID}
+        </if>
+        <if test="areaID!=null">
+            and areaID = #{areaID}
+        </if>
+        <if test="statusID!=null">
+            and statusID = #{statusID}
+        </if>
+    </select>
+
+
+    <update id="deleteMessage" parameterType="java.util.Map">
+         update page_message set is_del = 1 where find_in_set(id,#{ids})
+    </update>
+
+
+
+</mapper>

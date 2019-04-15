@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.baiyajin.mapper.pagedata.PageSubscriptionMapper">
+
+    <!--分页查询报告-->
+    <select id="findList" parameterType="com.baiyajin.vo.pagedata.SubscriptionVo" resultType="com.baiyajin.vo.pagedata.SubscriptionVo">
+        SELECT
+        a.id as "id",
+        a.number as "number",
+        a.title AS "title",
+        a.createTime AS "createTime"
+        FROM page_subscription a
+        WHERE
+        a.statusID = "qy"
+        <if test="number !=null and number != ''">
+            AND a.number = #{number}
+        </if>
+        ORDER BY createTime DESC
+    </select>
+
+</mapper>
