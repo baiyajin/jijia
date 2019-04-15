@@ -53,7 +53,7 @@ public class PageSubscriptionController {
             pageSubscriptionInterface.insert(pageSubscription);
         } catch (Exception e) {
             e.printStackTrace();
-            return new Results(1,"fila");
+            return new Results(1,"fail");
         }
         return new Results(0,"success");
     }
