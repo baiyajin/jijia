@@ -167,11 +167,17 @@
 			<version>3.15</version>
 		</dependency>
 
-		<dependency>
+		<dependency> <!-- API -->
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger2</artifactId>
-			<version>2.6.1</version>
+			<version>2.7.0</version>
 		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>2.7.0</version>
+		</dependency>
+
 		<!--这种方式是直接生成token-->
 		<dependency>
 			<groupId>com.auth0</groupId>

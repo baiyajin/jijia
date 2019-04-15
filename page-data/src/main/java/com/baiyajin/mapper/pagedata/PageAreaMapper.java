@@ -4,5 +4,5 @@ import com.baiyajin.entity.pagedata.PageArea;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 
 public interface PageAreaMapper extends BaseMapper<PageArea> {
-
+    Integer save(PageArea pageArea);
 }
