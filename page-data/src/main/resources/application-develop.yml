@@ -1,3 +1,25 @@
 spring:
   profiles:
     active: develop
+  datasource:
+    username: root
+#    driverClassName: com.mysql.cj.jdbc.Driver
+    password: '%#$123456jijia'
+#    url: jdbc:mysql://localhost:3306/jijia?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://192.168.8.29:3306/jijia_develop?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8
+#服务
+server:
+#  max-http-header-size: 10240000  #解决java.lang.IllegalArgumentException: Request header is too large
+#  connectionTimeout: 180000 #解决上传大文件总报错 java.io.EOFException: Unexpected EOF read on the socket
+  port: 8016
+#  ssl:
+#    key-store: classpath:keystore.p12
+#    key-store-password: baiyajin
+#    key-store-type: PKCS12
+#    key-alias: tomcat
+#  ssl:
+#    key-store: /home/cherry.keystore
+#    key-store-password: baiyajin
+#    key-alias: cherry
+  tomcat:
+    uri-encoding: UTF-8
