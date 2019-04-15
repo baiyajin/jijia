@@ -64,7 +64,7 @@ public class PageMaterialController {
      * @param materialVo
      * @return
      */
-    @RequestMapping(value = "/findByTime",method = RequestMethod.GET)
+    @RequestMapping(value = "/findByTime",method = RequestMethod.POST)
     @ResponseBody
     public List<MaterialVo> findByTime(MaterialVo materialVo){
         List<MaterialVo> materialVoList = pageMaterialInterface.findByTime(materialVo);

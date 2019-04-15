@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages = "com.baiyajin.pagedata")
 @MapperScan(value = "com.baiyajin.pagedata.mapper")
 public class PageDataApplication {
 

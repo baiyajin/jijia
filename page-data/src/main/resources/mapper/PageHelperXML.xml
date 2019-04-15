@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.baiyajin.pagedata.mapper.PageHelperMapper">
+
+
+    <!--分页查询报告-->
+    <select id="findList" parameterType="com.baiyajin.pagedata.vo.HelperVo" resultType="com.baiyajin.pagedata.vo.HelperVo">
+        SELECT
+            a.id AS "id",
+            a.artCode AS "code",
+            a.title AS "title",
+            a.publishState as "publishState",
+            a.publishTime AS "time"
+        FROM page_helper a
+        WHERE a.statusID = "qy"
+            <if test="publishState !=null and publishState != ''">
+                and a.publishState = #{publishState}
+            </if>
+            <if test="title !=null and title != ''">
+                AND a.title LIKE CONCAT('%', #{title}, '%')
+            </if>
+        ORDER BY a.publishTime DESC,a.artCode
+    </select>
+
+
+</mapper>

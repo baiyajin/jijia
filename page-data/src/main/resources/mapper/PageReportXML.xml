@@ -3,7 +3,25 @@
 <mapper namespace="com.baiyajin.pagedata.mapper.PageReportMapper">
 
 
-
+    <!--分页查询报告-->
+    <select id="findList" parameterType="com.baiyajin.pagedata.vo.ReportVo" resultType="com.baiyajin.pagedata.vo.ReportVo">
+        SELECT
+            a.id AS "id",
+            a.`name` AS "title",
+            a.type AS "type",
+            a.userID,
+            a.createTime AS "createTime"
+            FROM page_report a
+            WHERE
+                a.statusID = "qy"
+            <if test="type !=null and type != ''">
+                AND a.type = #{type}
+            </if>
+            <if test="userID !=null and userID != ''">
+                AND a.userID = #{userID}
+            </if>
+                ORDER BY createTime DESC
+    </select>
 
 
 </mapper>

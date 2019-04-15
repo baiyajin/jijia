@@ -9,13 +9,13 @@ import java.sql.Timestamp;
 @TableName("page_subscription")
 public class PageSubscription {
   private String id;
-  private String titel;
+  private String title;
   private String materialID;
   private String areaID;
   private String time;
   private String userID;
   private String statusID;
-
+  private String number;
 
   private Timestamp createTime;
   private Timestamp updateTime;
