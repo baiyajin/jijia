@@ -58,7 +58,7 @@ public class PageHelperController {
     public Object delete(String id){
         PageHelper pageHelper = pageHelperInterface.selectById(id);
         if (pageHelper == null){
-            return new Results(1,"无法找到该文章");
+            return new Results(1,"该文章不存在");
         }
         pageHelper.setStatusID("jy");
         try {
