@@ -18,11 +18,16 @@ public class PageMaterialService extends ServiceImpl<PageMaterialMapper,PageMate
     private PageMaterialClassInterface pageMaterialClassInterface;
 
     public List<MaterialAndClass> getMaterialsAndClass(Map<String,Object> map){
-        String id = map.get("id")==null?null:map.get("id").toString();
-        map.clear();
-        map.put("id",id);
+//        String id = map.get("id")==null?null:map.get("id").toString();
+//        map.clear();
+//        map.put("id",id);
         List<MaterialAndClass> materialAndClassList = baseMapper.getMaterialsAndClass(map);
         return materialAndClassList;
+    }
+
+    @Override
+    public List<MaterialAndClass> getMaterialsClass(Map<String, Object> map) {
+        return baseMapper.getMaterialsClass(map);
     }
 
     @Override

@@ -6,6 +6,9 @@ import com.baiyajin.service.pagedata.PageMaterialInterface;
 import com.baiyajin.util.IdGenerate;
 import com.baiyajin.util.Results;
 import com.baiyajin.vo.pagedata.MaterialVo;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -77,13 +80,22 @@ public class PageMaterialController {
 
     }
 
-    @RequestMapping(value = "/getMaterialsAndClass", method = {RequestMethod.POST}, produces = "application/json;charset=UTF-8")
+   /* @RequestMapping(value = "/getMaterialsAndClass", method = {RequestMethod.POST}, produces = "application/json;charset=UTF-8")
     @Transactional(rollbackFor = Exception.class)
     @ResponseBody
     public List<MaterialAndClass> getMaterialsAndClass(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String,Object> map) {
         return pageMaterialInterface.getMaterialsAndClass(map);
-    }
+    }*/
 
+
+    @ApiOperation(value = "获取材料分类",notes = "获取材料分类信息（1,2级材料），请求类型json")
+    @ApiImplicitParams({@ApiImplicitParam(name = "无需参数",value =  "如：\t {}",dataType = "String")})
+    @RequestMapping(value = "/getMaterialsClass", method = {RequestMethod.POST}, produces = "application/json;charset=UTF-8")
+    @Transactional(rollbackFor = Exception.class)
+    @ResponseBody
+    public List<MaterialAndClass> getMaterialsClass(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String,Object> map) {
+        return pageMaterialInterface.getMaterialsClass(map);
+    }
 
 }
 

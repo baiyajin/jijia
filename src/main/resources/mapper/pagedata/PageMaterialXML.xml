@@ -14,6 +14,8 @@
             <result column="mname" property="name"></result>
             <result column="price" property="price"></result>
             <result column="tongbi" property="tongbi"></result>
+            <result column="exponent" property="exponent"></result>
+            <result column="huanbi" property="huanbi"></result>
             <result column="areaID" property="areaID"></result>
             <result column="materialClassID" property="materialClassID"></result>
             <result column="statusID" property="statusID"></result>
@@ -22,7 +24,8 @@
         </collection>
     </resultMap>
 
-    <select id="getMaterialsAndClass" parameterType="java.util.Map" resultMap="MaterialAndClass">
+    <!-- 废弃-->
+<!--    <select id="getMaterialsAndClass" parameterType="java.util.Map" resultMap="MaterialAndClass">
       select * from page_material_class m
         left join
         (select *,id as mid,name as mname from
@@ -33,7 +36,32 @@
                 m.id = #{id}
             </if>
         </where>
+    </select>-->
+
+
+    <select id="getMaterialsAndClass" parameterType="java.util.Map" resultMap="MaterialAndClass">
+        select m.id,m.name,i.mcid as mid,mname,i2.price,exponent,tongbi,huanbi from (
+          select * from hlidx_category where path like concat('%',ifnull(#{id},''),'%')
+        ) m
+        left join
+        hl_main_material i on m.id=i.c3
+        left join
+        page_material_pice i2
+        on i.mcid = i2.mid
     </select>
+
+
+
+    <select id="getMaterialsClass" parameterType="java.util.Map" resultMap="MaterialAndClass">
+        select m.id,m.name,i.name as  mname,i.id as mid from
+          hlidx_category m
+        left join
+          hlidx_category i
+        on m.id=i.pid
+        where m.pid = 0
+
+    </select>
+
 
 
     <select id="findByTime" parameterType="com.baiyajin.vo.pagedata.MaterialVo" resultType="com.baiyajin.vo.pagedata.MaterialVo">
