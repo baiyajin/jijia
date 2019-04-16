@@ -1,7 +1,7 @@
 #spring
 spring:
   profiles:
-      active: develop
+      active: test
   freemarker:
     allow-request-override: false #页面热加载
     suffix: .html
@@ -30,7 +30,8 @@ spring:
     static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:${web.file-path}
 web:
   file-path: file:/home/
-  IP: 192.168.8.29
+  IP: localhost
+#  IP: 192.168.8.29
 #  IP: 192.168.8.19
 
 #  servlet:

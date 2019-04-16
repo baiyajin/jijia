@@ -13,26 +13,26 @@ import java.util.Map;
 
 
 @Controller
-@RequestMapping("/templates")
+@RequestMapping("/index")
 public class index {
 
 
-    @ApiOperation(value = "test后台登录主页",notes = "test后台登录主页")
-    @RequestMapping(value = "/test/index.html", method = {RequestMethod.POST}, produces = "application/json;charset=UTF-8")
+    @ApiOperation(value = "后台登录主页地址:{/templates/test/index.html}",notes = "test后台登录主页地址:{/templates/test/index.html}")
+    @RequestMapping(value = "/test1", method = {RequestMethod.POST}, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String test(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String,Object> map) {
         return "/templates/test/index.html";
     }
 
-    @ApiOperation(value = "大屏主页",notes = "大屏主页")
-    @RequestMapping(value = "/distD/index.html", method = {RequestMethod.POST}, produces = "application/json;charset=UTF-8")
+    @ApiOperation(value = "大屏主页地址:{/templates/distD/index.html}",notes = "大屏主页地址:{/templates/distD/index.html}")
+    @RequestMapping(value = "/test2", method = {RequestMethod.POST}, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String distD(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String,Object> map) {
         return "/templates/distD/index.html";
     }
 
-    @ApiOperation(value = "小屏主页",notes = "小屏主页")
-    @RequestMapping(value = "/distX/index.html", method = {RequestMethod.POST}, produces = "application/json;charset=UTF-8")
+    @ApiOperation(value = "小屏主页地址:{/templates/distX/index.html}",notes = "小屏主页地址:{/templates/distX/index.html}")
+    @RequestMapping(value = "/test3", method = {RequestMethod.POST}, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String distX(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String,Object> map) {
         return "/templates/distX/index.html";

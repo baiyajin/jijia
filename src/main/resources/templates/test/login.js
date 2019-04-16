@@ -71,7 +71,7 @@ function checkLogin2() {
                     //取时必须JSON.parse()拿,字符串的json就被转换成对象，就可以用对象的方式取值了
                     localStorage.setItem("UserINFO",JSON.stringify(data.user));
                     UserINFO = data.user;
-
+                    console.log(data.user);
                     /*名字*/
                     jQuery("#block-title-user-name").text(UserINFO.userName);
                     /*头像*/
