@@ -35,6 +35,13 @@ public class PageHelperController {
     @ResponseBody
     public Object addHelper(PageHelper pageHelper){
         pageHelper.setId(IdGenerate.uuid());
+        String publishState = "1";
+        if (pageHelper != null){
+            publishState = pageHelper.getPublishState();
+        }
+        if ("0".equals(publishState)){
+            pageHelper.setPublishTime(new Timestamp(System.currentTimeMillis()));
+        }
         pageHelper.setStatusID("qy");
         pageHelper.setCreateTime(new Timestamp(System.currentTimeMillis()));
         pageHelper.setUpdateTime(new Timestamp(System.currentTimeMillis()));
