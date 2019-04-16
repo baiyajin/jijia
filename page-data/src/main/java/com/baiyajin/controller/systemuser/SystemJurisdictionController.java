@@ -45,6 +45,7 @@ public class SystemJurisdictionController {
 
 
     /*查询权限类型*/
+    @ApiOperation(value = "feign远程服务调用测试",notes = "查询test")
     @RequestMapping(value = "/selectJurisdiction", method = {RequestMethod.POST}, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public  ReturnModel selectJurisdiction(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String,Object> map) {
@@ -67,6 +68,7 @@ public class SystemJurisdictionController {
 
 
     /*修改权限类型*/
+    @ApiOperation(value = "feign远程服务调用测试",notes = "查询test")
     @RequestMapping(value = "/updateJurisdiction", method = {RequestMethod.POST}, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public  ReturnModel updateJurisdiction(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String,Object> map) {
