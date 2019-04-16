@@ -2,6 +2,9 @@ package com.baiyajin.controller.pagedata;
 
 import com.baiyajin.entity.pagedata.PageMessage;
 import com.baiyajin.service.pagedata.PageMessageInterface;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +33,8 @@ public class PageMessageController {
      * @param map
      * @return
      */
+    @ApiOperation(value = "获取消息列表",notes = "通过用户id获取该用户的消息数据，请求类型json")
+    @ApiImplicitParams({@ApiImplicitParam(name = "userId（必填）",value =  "如：\t{\"userId\":\"11\"}",dataType = "String")})
     @RequestMapping(value = "/getMessage", method = {RequestMethod.POST}, produces = "application/json;charset=UTF-8")
     @Transactional(rollbackFor = Exception.class)
     @ResponseBody
@@ -62,6 +67,8 @@ public class PageMessageController {
      * @param map
      * @return
      */
+    @ApiOperation(value = "删除消息",notes = "通过消息id删除该条消息（需要删除多条id用逗号隔开），请求类型json")
+    @ApiImplicitParams({@ApiImplicitParam(name = "id（必填）",value =  "如：\t{\"userId\":\"11\"}或者{\"userId\":\"11,12\"}",dataType = "String")})
     @RequestMapping(value = "/delMessage", method = {RequestMethod.POST}, produces = "application/json;charset=UTF-8")
     @Transactional(rollbackFor = Exception.class)
     @ResponseBody
