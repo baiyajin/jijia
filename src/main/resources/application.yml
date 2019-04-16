@@ -43,11 +43,6 @@ logging:
     com.business: DEBUG
   config: classpath:logback.xml #实体扫描，多个package用逗号或者分号分隔
 
-#spring cloud配置
-eureka:
-  client:
-    register-with-eureka: false
-    fetch-registry: false
 
 #mybatis plus 设置
 mybatis-plus:
