@@ -69,7 +69,7 @@ public class PageReportController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/deleteReport",method = RequestMethod.PUT)
+    @RequestMapping(value = "/deleteReport",method = RequestMethod.POST)
     @ResponseBody
     @Transactional(rollbackFor = Exception.class)
     public Object deleteReort(String id){
@@ -94,7 +94,7 @@ public class PageReportController {
      * @param pageReport
      * @return
      */
-    @RequestMapping(value = "/uppdateReport",method = RequestMethod.PUT)
+    @RequestMapping(value = "/uppdateReport",method = RequestMethod.POST)
     @ResponseBody
     @Transactional(rollbackFor = Exception.class)
     public Object updateReport(PageReport pageReport){

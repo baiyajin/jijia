@@ -64,7 +64,7 @@ public class PageSubscriptionController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/delete",method = RequestMethod.PUT)
+    @RequestMapping(value = "/delete",method = RequestMethod.POST)
     @ResponseBody
     public Object delete(String id){
         PageSubscription pageSubscription = new PageSubscription();
@@ -115,7 +115,7 @@ public class PageSubscriptionController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/findPageById",method = RequestMethod.GET)
+    @RequestMapping(value = "/findPageById",method = RequestMethod.POST)
     @ResponseBody
     public Object findPageById(String id){
         PageSubscription pageSubscription = pageSubscriptionInterface.selectById(id);
