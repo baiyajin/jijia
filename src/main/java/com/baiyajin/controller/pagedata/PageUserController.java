@@ -36,7 +36,7 @@ public class PageUserController {
     /**
      * 后台用户登录
      * @param
-     * @return
+     * @return user
      */
     @RequestMapping(value = "/login", method = {RequestMethod.POST}, produces = "application/json;charset=UTF-8")
     @Transactional(rollbackFor = Exception.class)
