@@ -1,5 +1,6 @@
 package com.baiyajin.entity.pagedata;
 
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.plugins.Page;
 import lombok.Data;
@@ -16,6 +17,10 @@ public class PageReport {
   private String mark;
   private String statusID;
   private String userID;
+
+
+  @TableField(exist = false)
+  private String token;
 
 
   private Timestamp createTime;

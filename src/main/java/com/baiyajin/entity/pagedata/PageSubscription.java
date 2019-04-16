@@ -1,5 +1,6 @@
 package com.baiyajin.entity.pagedata;
 
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
 import lombok.Data;
 
@@ -20,6 +21,9 @@ public class PageSubscription {
   private String isPush;  //是否推送，0代表已推送，1代表未推送
   private BigDecimal bookPrice;//订阅时材料价格
   private String remark;
+
+  @TableField(exist = false)
+  private String token;
 
   private Timestamp createTime;
   private Timestamp updateTime;

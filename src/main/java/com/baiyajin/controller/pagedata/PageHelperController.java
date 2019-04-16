@@ -6,8 +6,12 @@ import com.baiyajin.util.Results;
 import com.baiyajin.vo.pagedata.HelperVo;
 import com.baiyajin.vo.pagedata.Page;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
+import org.omg.CORBA.INTERNAL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,10 +34,21 @@ public class PageHelperController {
      * @param pageHelper
      * @return
      */
+    @ApiOperation(value = "帮助中心文章增加" ,notes = "publishState默认为1,0代表已发布，1代表未发布，传入0以后自动生成发布时间")
+    @ApiImplicitParams({@ApiImplicitParam(name = "title（必填）,content(非必填),publishState(非必填)",value =  "title:123465,content:789463,publishState:0",dataType = "String",paramType = "body")})
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     @Transactional(rollbackFor = Exception.class)
     @ResponseBody
     public Object addHelper(PageHelper pageHelper){
+
+        String publishState = "1";
+        if (pageHelper != null){
+            publishState = pageHelper.getPublishState();
+        }
+        if ("0".equals(publishState)){
+            pageHelper.setPublishTime(new Timestamp(System.currentTimeMillis()));
+        }
+
         pageHelper.setId(IdGenerate.uuid());
         pageHelper.setStatusID("qy");
         pageHelper.setCreateTime(new Timestamp(System.currentTimeMillis()));
@@ -52,6 +67,8 @@ public class PageHelperController {
      * @param id
      * @return
      */
+    @ApiOperation(value = "帮助中心文章删除" ,notes = "逻辑删除，statusId值为jy代表已删除，数据库依然存在，但是页面不显示")
+    @ApiImplicitParams({@ApiImplicitParam(name = "id（必填)",value =  "id:123465",dataType = "String",paramType = "body")})
     @RequestMapping(value = "/delete",method = RequestMethod.POST)
     @Transactional(rollbackFor = Exception.class)
     @ResponseBody
@@ -75,6 +92,8 @@ public class PageHelperController {
      * @param pageHelper
      * @return
      */
+    @ApiOperation(value = "帮助中心文章修改" ,notes = "需要修改什么那些字段就传入那些字段")
+    @ApiImplicitParams({@ApiImplicitParam(name = "id（必填),title(非必填),content(非必填),publishState(非必填)",value =  "id:123465",dataType = "String",paramType = "body")})
     @RequestMapping(value = "/update",method = RequestMethod.POST)
     @Transactional(rollbackFor = Exception.class)
     @ResponseBody
@@ -93,6 +112,8 @@ public class PageHelperController {
      * @param id
      * @return
      */
+    @ApiOperation(value = "帮助中心文章发布" ,notes = "publishState，0代表已发布，1代表未发布，默认新增文章时为未发布")
+    @ApiImplicitParams({@ApiImplicitParam(name = "id（必填)",value =  "id:123465",dataType = "String",paramType = "body")})
     @RequestMapping(value = "/publish",method = RequestMethod.POST)
     @Transactional(rollbackFor = Exception.class)
     @ResponseBody
@@ -120,6 +141,8 @@ public class PageHelperController {
      * @param pageSize
      * @return
      */
+    @ApiOperation(value = "查询帮助中心文章列表" ,notes = "分页查询，未传入pageNum和pageSize默认从第1页查，每页十条数据,num为非必填，填入以后只查询该编号的文章，num为数字")
+    @ApiImplicitParams({@ApiImplicitParam(name = "pageNum（非必填),pageSize(非必填)",value =  "pageNum:1,pageNum:5",dataType = "String",paramType = "body")})
     @RequestMapping(value = "/findHelperByPage",method = RequestMethod.POST)
     @ResponseBody
     public Object findHelperByPage(HelperVo helperVo,String pageNum,String pageSize){
@@ -131,7 +154,10 @@ public class PageHelperController {
             p.setPageSize(10);
             p.setPageNo(0);
         }
-        int count = pageHelperInterface.selectCount(new EntityWrapper<>());
+        PageHelper pageHelper = new PageHelper();
+        int num  = helperVo.getNum();
+        pageHelper.setArtCode(num);
+        int count = pageHelperInterface.selectCount(new EntityWrapper<>(pageHelper));
         Page<HelperVo> page = pageHelperInterface.findList(p,helperVo);
         if (page == null || page.getList() == null ||page.getList().size() == 0){
             return new Results(1,"暂无数据");
@@ -145,6 +171,8 @@ public class PageHelperController {
      * @param id
      * @return
      */
+    @ApiOperation(value = "查询文章详情" ,notes = "ID查询，只要ID能获取到就能查到文章，无论是否被删除")
+    @ApiImplicitParams({@ApiImplicitParam(name = "id（必填)",value =  "id:123465",dataType = "String",paramType = "body")})
     @RequestMapping(value = "/getArtInfo",method = RequestMethod.POST)
     @ResponseBody
     public Object getArtInfo(String id){

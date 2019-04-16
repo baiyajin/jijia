@@ -13,6 +13,6 @@ public class ReportVo implements Serializable {
     private String title;   //报告标题
     private Date createTime;  //时间
     private String userID;
-
+    private String token;
     private Page<ReportVo>  page;//分页信息
 }

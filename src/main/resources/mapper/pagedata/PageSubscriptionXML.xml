@@ -15,6 +15,9 @@
         <if test="number !=null and number != ''">
             AND a.number = #{number}
         </if>
+        <if test="userID !=null and userID != ''">
+            AND a.userID = #{userID}
+        </if>
         ORDER BY createTime DESC
     </select>
 

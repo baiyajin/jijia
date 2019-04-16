@@ -3,10 +3,15 @@ package com.baiyajin.controller.pagedata;
 import com.baiyajin.entity.pagedata.PageReport;
 import com.baiyajin.service.pagedata.PageReportInterface;
 import com.baiyajin.util.IdGenerate;
+import com.baiyajin.util.JWT;
 import com.baiyajin.util.Results;
 import com.baiyajin.vo.pagedata.Page;
 import com.baiyajin.vo.pagedata.ReportVo;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import io.jsonwebtoken.Claims;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.models.auth.In;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
@@ -33,8 +38,6 @@ public class PageReportController {
     private PageReportInterface pageReportInterface;
 
 
-
-
     @RequestMapping(value = "/", method = {RequestMethod.POST}, produces = "application/json;charset=UTF-8")
     @Transactional(rollbackFor = Exception.class)
     @ResponseBody
@@ -47,10 +50,21 @@ public class PageReportController {
      * @param pageReport
      * @return
      */
+    @ApiOperation(value = "新增报告" ,notes = "新增报告默认状态ID为启用(qy)，type（1 平台发布,2 我的,3 全部），logo为图片上传，状态默认为qy，若不默认可传入statusID：jy")
+    @ApiImplicitParams({@ApiImplicitParam(name = "type（必填),name(必填),logo（必填），content(必填),publishState(非必填)，mark(非必填)，token（必填）"
+            ,value =  "type:1,name:123,logo:safdaf/sfsa.*,content:asfa,mark:sdaf",dataType = "String",paramType = "body")})
     @RequestMapping(value = "/addReport",method = RequestMethod.POST)
     @Transactional(rollbackFor = Exception.class)
     @ResponseBody
     public Object addReport (PageReport pageReport){
+        String token = pageReport.getToken();
+        Claims claims = JWT.parseJWT(token);
+        if (claims == null){
+            return new Results(1,"请重新登录");
+        }else {
+            pageReport.setUserID(claims.getId());
+        }
+
         pageReport.setId(IdGenerate.uuid());
         pageReport.setStatusID("qy");
         pageReport.setCreateTime(new Timestamp(System.currentTimeMillis()));
@@ -69,6 +83,8 @@ public class PageReportController {
      * @param id
      * @return
      */
+    @ApiOperation(value = "删除报告" ,notes = "逻辑删除，statusId值为jy代表已删除，数据库依然存在，但是页面不显示")
+    @ApiImplicitParams({@ApiImplicitParam(name = "id（必填)",value =  "id:123465",dataType = "String",paramType = "body")})
     @RequestMapping(value = "/deleteReport",method = RequestMethod.POST)
     @ResponseBody
     @Transactional(rollbackFor = Exception.class)
@@ -94,6 +110,8 @@ public class PageReportController {
      * @param pageReport
      * @return
      */
+    @ApiOperation(value = "修改报告" ,notes = "需要修改什么那些字段就传入那些字段")
+    @ApiImplicitParams({@ApiImplicitParam(name = "id（必填),type(非必填),content(非必填),logo(非必填)",value =  "id:123465",dataType = "String",paramType = "body")})
     @RequestMapping(value = "/uppdateReport",method = RequestMethod.POST)
     @ResponseBody
     @Transactional(rollbackFor = Exception.class)
@@ -120,10 +138,24 @@ public class PageReportController {
      * @param pageSize
      * @return
      */
+    @ApiOperation(value = "分页产需拿报告" ,notes = "分页查询，未传入pageNum和pageSize默认从第1页查，每页十条数据,num为非必填，填入以后只查询该编号的文章，num为数字")
+    @ApiImplicitParams({@ApiImplicitParam(name = "pageNum（非必填),pageSize(非必填)，token（必填）",value =  "pageNum:1,pageNum:5,token:15646saf",dataType = "String",paramType = "body")})
     @RequestMapping(value = "/findListByPage",method = RequestMethod.POST)
     @ResponseBody
     public Object findListByPage(ReportVo reportVo,String pageNum,String pageSize){
         Page<ReportVo> p = new Page();
+        PageReport pageReport = new PageReport();
+        if ("2".equals(reportVo.getType())){
+            String token = reportVo.getToken();
+            Claims claims = JWT.parseJWT(token);
+            if (claims == null){
+                return new Results(1,"请重新登录");
+            }else {
+                pageReport.setUserID(claims.getId());
+                reportVo.setUserID(claims.getId());
+            }
+        }
+
         if (StringUtils.isNotBlank(pageNum)&&StringUtils.isNotBlank(pageSize)){
             p.setPageNo(Integer.valueOf(pageNum));
             p.setPageSize(Integer.valueOf(pageSize));
@@ -131,12 +163,9 @@ public class PageReportController {
             p.setPageSize(10);
             p.setPageNo(0);
         }
-//        Page<PageReport> page = pageReportInterface.selectPage(p);
-        PageReport pageReport = new PageReport();
+
         String type = reportVo.getType();
-        String userID = reportVo.getUserID();
         pageReport.setType(type);
-        pageReport.setUserID(userID);
         int count = pageReportInterface.selectCount(new EntityWrapper<PageReport>(pageReport));
         Page<ReportVo> page = pageReportInterface.findList(p,reportVo);
         if (page == null || page.getList() == null ||page.getList().size() == 0){
@@ -151,6 +180,8 @@ public class PageReportController {
      * @param id
      * @return
      */
+    @ApiOperation(value = "获取报告详情" ,notes = "ID查询，只要ID能获取到就能查到文章，无论是否被删除")
+    @ApiImplicitParams({@ApiImplicitParam(name = "id（必填)",value =  "id:123465",dataType = "String",paramType = "body")})
     @RequestMapping(value = "/getReportById",method = RequestMethod.POST)
     @ResponseBody
     public Object getReportById(String id){

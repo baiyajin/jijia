@@ -12,5 +12,7 @@ public class SubscriptionVo implements Serializable {
     private String number;
     private Date createTime;
     private Page<SubscriptionVo> page;
+    private String token;
+    private String userID;
 
 }
