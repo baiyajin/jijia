@@ -40,7 +40,7 @@ web:
 #logging日志
 logging:
   level:
-    com.baiyajin: DEBUG
+    com.business: DEBUG
   config: classpath:logback.xml #实体扫描，多个package用逗号或者分号分隔
 
 

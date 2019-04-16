@@ -14,11 +14,11 @@
     </appender>
 
     <appender name="baiyajin" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <!--<File>/home/allinpay/apache-tomcat-8.0.53/webapps/logs/baiyajinLOG.log</File>-->
-        <File>/logs/baiyajin.log</File>
+        <File>/home/allinpay/apache-tomcat-8.0.53/webapps/logs/baiyajinLOG.log</File>
+        <!--<File>/logs/baiyajin.log</File>-->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!--<FileNamePattern>/home/allinpay/apache-tomcat-8.0.53/webapps/logs/baiyajinLOG_%d{yyyy-MM-dd}.log-->
-            <FileNamePattern>/logs/baiyajin_%d{yyyy-MM-dd}.log
+            <FileNamePattern>/home/allinpay/apache-tomcat-8.0.53/webapps/logs/baiyajinLOG_%d{yyyy-MM-dd}.log
+            <!--<FileNamePattern>/logs/baiyajin_%d{yyyy-MM-dd}.log-->
             </FileNamePattern>
             <maxHistory>30</maxHistory>
         </rollingPolicy>

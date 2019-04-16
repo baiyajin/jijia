@@ -1,7 +1,5 @@
 package com.baiyajin.controller.pagedata;
 
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,7 +18,6 @@ public class index {
 
 
     @ApiOperation(value = "后台登录主页地址:{/templates/test/index.html}",notes = "test后台登录主页地址:{/templates/test/index.html}")
-    @ApiImplicitParams({@ApiImplicitParam(name = "lineId（必填） ,timerId,",value =  "lineId ,timerId,token如：\t{\"lineId\":\"123456\",\"timerId\":\"123456\",\"token\":\"123456\"}",dataType = "String")})
     @RequestMapping(value = "/test1", method = {RequestMethod.POST}, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String test(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String,Object> map) {
