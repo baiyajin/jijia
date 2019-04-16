@@ -19,6 +19,7 @@ public class PageSubscription {
   private String number;
   private String isPush;  //是否推送，0代表已推送，1代表未推送
   private BigDecimal bookPrice;//订阅时材料价格
+  private String remark;
 
   private Timestamp createTime;
   private Timestamp updateTime;

@@ -61,19 +61,25 @@ public class PageMaterialController {
      */
     @RequestMapping(value = "/findByTime",method = RequestMethod.POST)
     @ResponseBody
-    public List<MaterialVo> findByTime(MaterialVo materialVo){
+    public Object findByTime(MaterialVo materialVo){
         List<MaterialVo> materialVoList = pageMaterialInterface.findByTime(materialVo);
+        if (materialVoList == null || materialVoList.size() == 0){
+            return new Results(1,"暂时无数据");
+        }
                 return materialVoList;
     }
 
     @RequestMapping(value = "/getMaterials", method = {RequestMethod.POST}, produces = "application/json;charset=UTF-8")
     @Transactional(rollbackFor = Exception.class)
     @ResponseBody
-    public List<PageMaterial> getMaterials(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String,Object> map) {
+    public Object getMaterials(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String,Object> map) {
         Map<String,Object> pMap = new HashMap<String,Object>();
         pMap.put("id",map.get("id"));
-        List<PageMaterial> PageMaterialList = pageMaterialInterface.selectByMap(pMap);
-        return PageMaterialList;
+        List<PageMaterial> pageMaterialList = pageMaterialInterface.selectByMap(pMap);
+        if (pageMaterialList == null || pageMaterialList.size() == 0){
+            return new Results(1,"暂时无数据");
+        }
+        return pageMaterialList;
 
     }
 

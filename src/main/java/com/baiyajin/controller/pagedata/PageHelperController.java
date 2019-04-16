@@ -52,7 +52,7 @@ public class PageHelperController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/delete",method = RequestMethod.PUT)
+    @RequestMapping(value = "/delete",method = RequestMethod.POST)
     @Transactional(rollbackFor = Exception.class)
     @ResponseBody
     public Object delete(String id){
@@ -75,7 +75,7 @@ public class PageHelperController {
      * @param pageHelper
      * @return
      */
-    @RequestMapping(value = "/update",method = RequestMethod.PUT)
+    @RequestMapping(value = "/update",method = RequestMethod.POST)
     @Transactional(rollbackFor = Exception.class)
     @ResponseBody
     public Object update(PageHelper pageHelper){
@@ -93,7 +93,7 @@ public class PageHelperController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/publish",method = RequestMethod.PUT)
+    @RequestMapping(value = "/publish",method = RequestMethod.POST)
     @Transactional(rollbackFor = Exception.class)
     @ResponseBody
     public Object publish(String id){
@@ -145,7 +145,7 @@ public class PageHelperController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/getArtInfo",method = RequestMethod.GET)
+    @RequestMapping(value = "/getArtInfo",method = RequestMethod.POST)
     @ResponseBody
     public Object getArtInfo(String id){
         PageHelper pageHelper = pageHelperInterface.selectById(id);
