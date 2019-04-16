@@ -34,4 +34,43 @@ public class PageMaterialService extends ServiceImpl<PageMaterialMapper,PageMate
     public List<MaterialVo> findByTime(MaterialVo materialVo) {
         return baseMapper.findByTime(materialVo);
     }
+
+    @Override
+    public List<Map<String,Object>> getMaterialsInfo(Map<String,Object> map){
+
+
+
+         //map.get("number").toString();
+        if(map.get("stratDate")==null && map.get("endDate")==null){
+            String number =  map.get("number").toString();
+            //TODO 计算起始日期和结束日期，放入map
+            //......
+        }
+
+
+        if(map.get("area")==null || "".equals(map.get("area"))){
+            //默认云南
+            map.put("area","530102000000");
+        }
+        //type=1查询月份（默认），2查询季度，3查询年
+        if(map.get("type")==null || map.get("type").toString().equals("1")  ){
+            return baseMapper.getMaterialsInfo(map);
+        }
+        if(map.get("type").toString().equals("2")  ){
+                map.put("type","quarter");
+        }
+        if(map.get("type").toString().equals("3")  ){
+            map.put("type","year");
+        }
+         return this.getMaterialsInfoByYear(map);
+    }
+
+
+    private List<Map<String, Object>> getMaterialsInfoByYear(Map<String, Object> map) {
+
+        return baseMapper.getMaterialsInfoByYear(map);
+
+    }
+
+
 }

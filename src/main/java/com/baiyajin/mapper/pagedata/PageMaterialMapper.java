@@ -22,6 +22,11 @@ public interface PageMaterialMapper extends BaseMapper<PageMaterial> {
 
     public List<MaterialAndClass> getMaterialsClass(Map<String,Object> map);
 
+    public List<Map<String,Object>> getMaterialsInfo(Map<String,Object> map);
+
+    public List<Map<String,Object>> getMaterialsInfoByYear(Map<String,Object> map);
+
+
 
 
 }

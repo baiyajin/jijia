@@ -20,4 +20,9 @@ public interface PageMaterialInterface extends IService<PageMaterial> {
     List<MaterialAndClass> getMaterialsAndClass(Map<String,Object> map);
 
     public List<MaterialAndClass> getMaterialsClass(Map<String,Object> map);
+
+    public List<Map<String,Object>> getMaterialsInfo(Map<String,Object> map);
+
+
+
 }
