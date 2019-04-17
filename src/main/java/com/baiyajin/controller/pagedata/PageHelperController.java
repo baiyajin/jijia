@@ -2,6 +2,7 @@ package com.baiyajin.controller.pagedata;
 
 import com.baiyajin.entity.pagedata.PageHelper;
 import com.baiyajin.service.pagedata.PageHelperInterface;
+import com.baiyajin.util.PageUtils;
 import com.baiyajin.util.Results;
 import com.baiyajin.vo.pagedata.HelperVo;
 import com.baiyajin.vo.pagedata.Page;
@@ -156,15 +157,24 @@ public class PageHelperController {
     public Object findHelperByPage(HelperVo helperVo,String pageNum,String pageSize){
         Page<HelperVo> p = new Page();
         if (StringUtils.isNotBlank(pageNum)&&StringUtils.isNotBlank(pageSize)){
-            p.setPageNo(Integer.valueOf(pageNum));
+            if ("0".equals(pageNum)){
+                pageNum = "1";
+            }
+            helperVo.setPageCurrent(PageUtils.pageNoRecord(pageNum,pageSize));
+            helperVo.setPSize(Integer.valueOf(pageSize));
             p.setPageSize(Integer.valueOf(pageSize));
+            p.setPageNo(Integer.valueOf(pageNum));
         }else {
+            helperVo.setPSize(10);
+            helperVo.setPageCurrent(PageUtils.pageNoRecord("1","10"));
             p.setPageSize(10);
-            p.setPageNo(0);
+            p.setPageNo(1);
         }
         PageHelper pageHelper = new PageHelper();
-        int num  = helperVo.getNum();
-        pageHelper.setArtCode(num);
+        Integer code  = helperVo.getCode();
+        if (code != null){
+            pageHelper.setArtCode(code);
+        }
         pageHelper.setStatusID("qy");
         int count = pageHelperInterface.selectCount(new EntityWrapper<>(pageHelper));
         Page<HelperVo> page = pageHelperInterface.findList(p,helperVo);

@@ -5,6 +5,7 @@ import com.baiyajin.entity.pagedata.PageSubscription;
 import com.baiyajin.service.pagedata.PageSubscriptionInterface;
 import com.baiyajin.util.IdGenerate;
 import com.baiyajin.util.JWT;
+import com.baiyajin.util.PageUtils;
 import com.baiyajin.util.Results;
 import com.baiyajin.vo.pagedata.Page;
 import com.baiyajin.vo.pagedata.ReportVo;
@@ -123,15 +124,24 @@ public class PageSubscriptionController {
                 subscriptionVo.setUserID(claims.getId());
             }
 
-        if (StringUtils.isNotBlank(pageNum) && StringUtils.isNotBlank(pageSize)){
-            p.setPageNo(Integer.valueOf(pageNum));
+        if (StringUtils.isNotBlank(pageNum)&&StringUtils.isNotBlank(pageSize)){
+            if ("0".equals(pageNum)){
+                pageNum = "1";
+            }
+            subscriptionVo.setPageCurrent(PageUtils.pageNoRecord(pageNum,pageSize));
+            subscriptionVo.setPSize(Integer.valueOf(pageSize));
             p.setPageSize(Integer.valueOf(pageSize));
+            p.setPageNo(Integer.valueOf(pageNum));
         }else {
+            subscriptionVo.setPSize(10);
+            subscriptionVo.setPageCurrent(PageUtils.pageNoRecord("1","10"));
             p.setPageSize(10);
-            p.setPageNo(0);
+            p.setPageNo(1);
         }
         String number = subscriptionVo.getNumber();
-        pageSubscription.setNumber(number);
+        if (StringUtils.isNotBlank(number)){
+            pageSubscription.setNumber(number);
+        }
         pageSubscription.setStatusID("qy");
         int count = pageSubscriptionInterface.selectCount(new EntityWrapper<>(pageSubscription));
         Page<SubscriptionVo> page = pageSubscriptionInterface.findList(p,subscriptionVo);

@@ -14,5 +14,8 @@ public class ReportVo implements Serializable {
     private Date createTime;  //时间
     private String userID;
     private String token;
+    private Integer pageCurrent;    //分页查询开始记录数
+    private Integer pSize;
     private Page<ReportVo>  page;//分页信息
+
 }

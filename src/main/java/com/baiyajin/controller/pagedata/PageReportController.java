@@ -4,6 +4,7 @@ import com.baiyajin.entity.pagedata.PageReport;
 import com.baiyajin.service.pagedata.PageReportInterface;
 import com.baiyajin.util.IdGenerate;
 import com.baiyajin.util.JWT;
+import com.baiyajin.util.PageUtils;
 import com.baiyajin.util.Results;
 import com.baiyajin.vo.pagedata.Page;
 import com.baiyajin.vo.pagedata.ReportVo;
@@ -158,15 +159,24 @@ public class PageReportController {
         }
 
         if (StringUtils.isNotBlank(pageNum)&&StringUtils.isNotBlank(pageSize)){
-            p.setPageNo(Integer.valueOf(pageNum));
+            if ("0".equals(pageNum)){
+                pageNum = "1";
+            }
+            reportVo.setPageCurrent(PageUtils.pageNoRecord(pageNum,pageSize));
+            reportVo.setPSize(Integer.valueOf(pageSize));
             p.setPageSize(Integer.valueOf(pageSize));
+            p.setPageNo(Integer.valueOf(pageNum));
         }else {
+            reportVo.setPSize(10);
+            reportVo.setPageCurrent(PageUtils.pageNoRecord("1","10"));
             p.setPageSize(10);
-            p.setPageNo(0);
+            p.setPageNo(1);
         }
 
         String type = reportVo.getType();
-        pageReport.setType(type);
+        if (StringUtils.isNotBlank(type)){
+            pageReport.setType(type);
+        }
         pageReport.setStatusID("qy");
         int count = pageReportInterface.selectCount(new EntityWrapper<PageReport>(pageReport));
         Page<ReportVo> page = pageReportInterface.findList(p,reportVo);

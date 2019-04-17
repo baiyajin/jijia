@@ -15,9 +15,13 @@
         <if test="type !=null and type != ''">
             AND a.type = #{type}
         </if>
+        <if test="title !=null and title != ''">
+            AND a.name LIKE CONCAT('%', #{title}, '%')
+        </if>
         <if test="userID !=null and userID != ''">
             AND a.userID = #{userID}
         </if>
         ORDER BY createTime DESC
+        LIMIT #{pageCurrent},#{pSize}
     </select>
 </mapper>

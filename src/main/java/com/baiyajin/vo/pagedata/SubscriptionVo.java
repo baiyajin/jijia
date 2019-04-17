@@ -11,6 +11,9 @@ public class SubscriptionVo implements Serializable {
     private String title;
     private String number;
     private Date createTime;
+
+    private Integer pageCurrent;    //分页查询开始记录数
+    private Integer pSize;
     private Page<SubscriptionVo> page;
     private String token;
     private String userID;

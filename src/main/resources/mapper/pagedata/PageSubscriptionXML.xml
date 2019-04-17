@@ -19,6 +19,7 @@
             AND a.userID = #{userID}
         </if>
         ORDER BY createTime DESC
+        LIMIT #{pageCurrent},#{pSize}
     </select>
 
 </mapper>
