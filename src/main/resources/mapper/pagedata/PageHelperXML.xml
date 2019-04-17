@@ -22,7 +22,7 @@
             <if test="code !=null and code != ''">
                 AND a.artCode = #{code}
             </if>
-        ORDER BY a.publishTime
+        ORDER BY a.publishTime DESC
         LIMIT #{pageCurrent},#{pSize}
     </select>
 

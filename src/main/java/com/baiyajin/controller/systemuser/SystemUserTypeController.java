@@ -5,6 +5,7 @@ import com.baiyajin.service.systemuser.SystemUserTypeInterface;
 import com.baiyajin.util.IdGenerate;
 import com.baiyajin.util.Results;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +27,10 @@ public class SystemUserTypeController {
      * @param systemUserType
      * @return
      */
+    @ApiOperation(value = "新增用户类型",notes =
+            "请求参数类型为:\t\n body\t\n"+
+                    "请求参数说明:\t\n name（必填） ,jurisdictionId（必填）\t\n" +
+                    "请求参数列表为:\t\n{\"name\":\"普通员工\",\"jurisdictionId\":\"1\"}")
     @RequestMapping(value = "/addSystemUserType",method = RequestMethod.POST)
     @Transactional(rollbackFor = Exception.class)
     @ResponseBody
@@ -48,6 +53,10 @@ public class SystemUserTypeController {
      * @param id
      * @return
      */
+    @ApiOperation(value = "删除用户类型",notes =
+            "请求参数类型为:\t\n body\t\n"+
+                    "请求参数说明:\t\n id（必填）" +
+                    "请求参数列表为:\t\n{\"id\":\"sfdsadf\"}")
     @RequestMapping(value = "/deleteSystemType",method = RequestMethod.PUT)
     @Transactional(rollbackFor = Exception.class)
     @ResponseBody
@@ -72,6 +81,10 @@ public class SystemUserTypeController {
      * @param systemUserType
      * @return
      */
+    @ApiOperation(value = "修改用户类型",notes =
+            "请求参数类型为:\t\n body\t\n"+
+                    "请求参数说明:\t\n id（必填） ,\t\n name（非必填） ,jurisdictionId（非必填）\t\n" +
+                    "请求参数列表为:\t\n{\"id\":\"asdfsadf\",\"name\":\"普通员工\",\"jurisdictionId\":\"1\"}")
     @RequestMapping(value = "/updateSystemType",method = RequestMethod.PUT)
     @Transactional(rollbackFor = Exception.class)
     @ResponseBody
@@ -103,6 +116,10 @@ public class SystemUserTypeController {
         return systemUserTypeList;
     }
 
+    @ApiOperation(value = "通过用户ID查询用户",notes =
+            "请求参数类型为:\t\n body\t\n"+
+                    "请求参数说明:\t\n id（必填） " +
+                    "请求参数列表为:\t\n{\"id\":\"asdfsadf\"}")
     @RequestMapping(value = "/findUserTypeById")
     @ResponseBody
     public SystemUserType findUserTypeById(String id){

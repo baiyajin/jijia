@@ -52,8 +52,8 @@ public class PageReportController {
      * @return
      */
     @ApiOperation(value = "新增报告" ,notes = "新增报告默认状态ID为启用(qy)，type（1 平台发布,2 我的,3 全部），logo为图片上传，状态默认为qy，若不默认可传入statusID：jy")
-    @ApiImplicitParams({@ApiImplicitParam(name = "type（必填),name(必填),logo（必填），content(必填),publishState(非必填)，mark(非必填)，token（必填）"
-            ,value =  "type:1,name:123,logo:safdaf/sfsa.*,content:asfa,mark:sdaf",dataType = "String",paramType = "body")})
+    @ApiImplicitParams({@ApiImplicitParam(name = "name(必填),logo（必填），content(必填),publishState(非必填)，mark(非必填)，token（必填）"
+            ,value =  "name:123,logo:safdaf/sfsa.*,content:asfa,mark:sdaf",dataType = "String",paramType = "body")})
     @RequestMapping(value = "/addReport",method = RequestMethod.POST)
     @Transactional(rollbackFor = Exception.class)
     @ResponseBody
@@ -65,7 +65,7 @@ public class PageReportController {
         }else {
             pageReport.setUserID(claims.getId());
         }
-
+        pageReport.setType("2");
         pageReport.setId(IdGenerate.uuid());
         pageReport.setStatusID("qy");
         pageReport.setCreateTime(new Timestamp(System.currentTimeMillis()));

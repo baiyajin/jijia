@@ -175,6 +175,11 @@ public class PageHelperController {
         if (code != null){
             pageHelper.setArtCode(code);
         }
+        String publishState = helperVo.getPublishState();
+        if (StringUtils.isBlank(publishState)){
+            pageHelper.setPublishState("0");
+            helperVo.setPublishState("0");
+        }
         pageHelper.setStatusID("qy");
         int count = pageHelperInterface.selectCount(new EntityWrapper<>(pageHelper));
         Page<HelperVo> page = pageHelperInterface.findList(p,helperVo);
@@ -196,8 +201,9 @@ public class PageHelperController {
     @ResponseBody
     public Object getArtInfo(String id){
         PageHelper pageHelper = pageHelperInterface.selectById(id);
-        pageHelper.setContent(StringEscapeUtils.escapeHtml(pageHelper.getContent()));
-        if (pageHelper == null){
+        if (pageHelper !=null){
+            pageHelper.setContent(StringEscapeUtils.escapeHtml(pageHelper.getContent()));
+        }else {
             return new Results(1,"没有该文章");
         }
         return pageHelper;
