@@ -19,6 +19,11 @@ public class PageReport {
   private String statusID;
   private String userID;
 
+  private String timeInterval;
+  private String materialClassID;
+  private String contrastRegionID;
+
+
 
   @TableField(exist = false)
   private String token;
