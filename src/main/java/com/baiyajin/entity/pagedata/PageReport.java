@@ -13,6 +13,7 @@ public class PageReport {
   private String id;
   private String type;
   private String name;
+  private String logo;
   private String content;
   private String mark;
   private String statusID;

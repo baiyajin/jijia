@@ -110,9 +110,9 @@ public class PageReportController {
      * @param pageReport
      * @return
      */
-    @ApiOperation(value = "修改报告" ,notes = "需要修改什么那些字段就传入那些字段")
-    @ApiImplicitParams({@ApiImplicitParam(name = "id（必填),type(非必填),content(非必填),logo(非必填)",value =  "id:123465",dataType = "String",paramType = "body")})
-    @RequestMapping(value = "/uppdateReport",method = RequestMethod.POST)
+    @ApiOperation(value = "修改报告" ,notes = "需要修改什么那些字段就传入那些字段，其中logo为图片上传，存放的是图片路径")
+    @ApiImplicitParams({@ApiImplicitParam(name = "id（必填),type(非必填),content(非必填),logo(必填)",value =  "id:123465",dataType = "String",paramType = "body")})
+    @RequestMapping(value = "/updateReport",method = RequestMethod.POST)
     @ResponseBody
     @Transactional(rollbackFor = Exception.class)
     public Object updateReport(PageReport pageReport){
@@ -138,8 +138,9 @@ public class PageReportController {
      * @param pageSize
      * @return
      */
-    @ApiOperation(value = "分页产需拿报告" ,notes = "分页查询，未传入pageNum和pageSize默认从第1页查，每页十条数据,num为非必填，填入以后只查询该编号的文章，num为数字")
-    @ApiImplicitParams({@ApiImplicitParam(name = "pageNum（非必填),pageSize(非必填)，token（必填）",value =  "pageNum:1,pageNum:5,token:15646saf",dataType = "String",paramType = "body")})
+    @ApiOperation(value = "分页产需拿报告" ,notes = "分页查询，未传入pageNum和pageSize默认从第1页查，每页十条数据,num为非必填，填入以后只查询该编号的文章，num为数字," +
+            "type(报告类型,1 平台发布,2 我的),不传入参数时默认为查询全部，查询我的报告时，token必填")
+    @ApiImplicitParams({@ApiImplicitParam(name = "pageNum（非必填),pageSize(非必填)，token（非必填）,type(非必填)",value =  "pageNum:1,pageNum:5,token:15646saf",dataType = "String",paramType = "body")})
     @RequestMapping(value = "/findListByPage",method = RequestMethod.POST)
     @ResponseBody
     public Object findListByPage(ReportVo reportVo,String pageNum,String pageSize){
@@ -166,6 +167,7 @@ public class PageReportController {
 
         String type = reportVo.getType();
         pageReport.setType(type);
+        pageReport.setStatusID("qy");
         int count = pageReportInterface.selectCount(new EntityWrapper<PageReport>(pageReport));
         Page<ReportVo> page = pageReportInterface.findList(p,reportVo);
         if (page == null || page.getList() == null ||page.getList().size() == 0){

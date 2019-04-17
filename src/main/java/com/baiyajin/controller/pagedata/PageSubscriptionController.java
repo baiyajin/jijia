@@ -132,6 +132,7 @@ public class PageSubscriptionController {
         }
         String number = subscriptionVo.getNumber();
         pageSubscription.setNumber(number);
+        pageSubscription.setStatusID("qy");
         int count = pageSubscriptionInterface.selectCount(new EntityWrapper<>(pageSubscription));
         Page<SubscriptionVo> page = pageSubscriptionInterface.findList(p,subscriptionVo);
         if (page == null || page.getList() == null ||page.getList().size() == 0){

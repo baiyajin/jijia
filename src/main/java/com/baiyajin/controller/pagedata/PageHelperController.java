@@ -98,6 +98,14 @@ public class PageHelperController {
     @Transactional(rollbackFor = Exception.class)
     @ResponseBody
     public Object update(PageHelper pageHelper){
+        if (pageHelper != null){
+            if ("0".equals(pageHelper.getPublishState())){
+                pageHelper.setPublishTime(new Timestamp(System.currentTimeMillis()));
+            }
+        }
+
+
+        pageHelper.setUpdateTime(new Timestamp(System.currentTimeMillis()));
         try {
             pageHelperInterface.updateById(pageHelper);
         } catch (Exception e) {
@@ -157,6 +165,7 @@ public class PageHelperController {
         PageHelper pageHelper = new PageHelper();
         int num  = helperVo.getNum();
         pageHelper.setArtCode(num);
+        pageHelper.setStatusID("qy");
         int count = pageHelperInterface.selectCount(new EntityWrapper<>(pageHelper));
         Page<HelperVo> page = pageHelperInterface.findList(p,helperVo);
         if (page == null || page.getList() == null ||page.getList().size() == 0){
