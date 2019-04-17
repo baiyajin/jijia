@@ -97,9 +97,12 @@ public class PageMaterialController {
         return pageMaterialInterface.getMaterialsClass(map);
     }
 
+    //	"type":"1","pid":"0",, "area":"530112000000", "stratDate":"2019-01-01", "endDate":"2019-04-02"
 
     @ApiOperation(value = "获取材料价格信息",notes = "获取材料价格及统计数据，请求类型json")
-    @ApiImplicitParams({@ApiImplicitParam(name = "pid,area,id",value =  "分类id默认（不传）查询所有，0则查询一级分类，区域地址id（不传）查询云南地区，指定查询该材料的信息 如：\t {\"pid\":\"0\",\"area\":\"530102000000\",\"id\":\"\"}",dataType = "String")})
+    @ApiImplicitParams({@ApiImplicitParam(name = "pid,area,id,type,stratDate,endDate",value =  "分类id默认（查询一级分类）" +
+            "区域地址id（默认查询云南地区），材料id指定查询该材料的信息,查询方式type=1查询月份（默认）type=2查询季度type=3查询年，" +
+            "stratDate，stratDate查询的开始时间和结束时间 如：\t {\"pid\":\"0\",\"area\":\"530102000000\",\"id\":\"\"}",dataType = "String")})
     @RequestMapping(value = "/getMaterialsInfo", method = {RequestMethod.POST}, produces = "application/json;charset=UTF-8")
     @Transactional(rollbackFor = Exception.class)
     @ResponseBody

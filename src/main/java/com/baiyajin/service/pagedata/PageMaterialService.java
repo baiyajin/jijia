@@ -38,19 +38,19 @@ public class PageMaterialService extends ServiceImpl<PageMaterialMapper,PageMate
     @Override
     public List<Map<String,Object>> getMaterialsInfo(Map<String,Object> map){
 
-
-
+        //默认查询一级分类
+        if(map.get("pid")==null){
+            map.put("pid",0);
+        }
          //map.get("number").toString();
         if(map.get("stratDate")==null && map.get("endDate")==null){
             String number =  map.get("number").toString();
             //TODO 计算起始日期和结束日期，放入map
             //......
         }
-
-
+        //默认云南地区
         if(map.get("area")==null || "".equals(map.get("area"))){
-            //默认云南
-            map.put("area","530102000000");
+            map.put("area","53");
         }
         //type=1查询月份（默认），2查询季度，3查询年
         if(map.get("type")==null || map.get("type").toString().equals("1")  ){
