@@ -5,6 +5,7 @@ import com.baiyajin.entity.pagedata.PageMaterial;
 import com.baiyajin.vo.pagedata.MaterialVo;
 import com.baomidou.mybatisplus.service.IService;
 
+import java.text.ParseException;
 import java.util.List;
 
 import java.util.Map;
@@ -21,7 +22,7 @@ public interface PageMaterialInterface extends IService<PageMaterial> {
 
     public List<MaterialAndClass> getMaterialsClass(Map<String,Object> map);
 
-    public List<Map<String,Object>> getMaterialsInfo(Map<String,Object> map);
+    public List<Map<String,Object>> getMaterialsInfo(Map<String,Object> map) throws ParseException;
 
 
 

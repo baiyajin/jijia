@@ -64,30 +64,51 @@
 
 
     <select id="getMaterialsInfo"  parameterType="java.util.Map" resultType="java.util.Map">
+
+
         <include refid="sqlString"/>
+
+        order by shot_by_calss
+
     </select>
 
 
-    <select id="getMaterialsInfoByYear"  parameterType="java.util.Map" resultType="java.util.Map">
+<!--    <select id="getMaterialsInfoByYear"  parameterType="java.util.Map" resultType="java.util.Map">
         select cid,name,pid,sort,mid,area,avg(price) as price,avg(exponent) as exponent,avg(tongbi) as tongbi,avg(huanbi) as huanbi,mdate from (
-        <include refid="sqlString"/>
+            <include refid="sqlString"/>
         ) mm group by cid
+
         <if test="type!=quarter">
             ,QUARTER(mdate)
         </if>
         <if test="type!=year" >
             ,year(mdate)
         </if>
-</select>
+</select>-->
+
+    <select id="getMaterialsInfoByYear"  parameterType="java.util.Map" resultType="java.util.Map">
+        <include refid="sqlString"/>
+    </select>
 
 
 
     <sql id="sqlString">
-        select m.id as cid,m.name,m.pid,m.sort,i.mid,i.area,price,exponent,tongbi,huanbi,mdate  from(
+        select m.id as cid,m.name,m.pid,m.sort,m.level,
+        ifnull(i.mid,'') as mid,
+        ifnull(i.area,'') as area,
+        ifnull(price,'') as price,
+        ifnull(exponent,'') as exponent,
+        ifnull(tongbi,'') as tongbi,
+        ifnull(huanbi,'') as huanbi,
+        ifnull(mdate,'') as asmdate
+        from(
         select * from hlidx_category
         <where>
             <if test="pid !=null and pid != ''">
-                pid = #{pid}
+                and pid = #{pid}
+            </if>
+           <if test="level !=null and level != ''">
+                and find_in_set(level,#{level})
             </if>
             <if test="id !=null and id != ''">
                 and id = #{id}
@@ -108,8 +129,9 @@
                 and  mdate <= #{endDate}
                 ]]>
             </if>
-
-
+            <if test="type !=null and type != ''">
+                and type = #{type}
+            </if>
         </where>
         ) i
         on m.id = i.mid

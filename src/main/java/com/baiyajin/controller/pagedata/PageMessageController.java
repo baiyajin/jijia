@@ -2,6 +2,9 @@ package com.baiyajin.controller.pagedata;
 
 import com.baiyajin.entity.pagedata.PageMessage;
 import com.baiyajin.service.pagedata.PageMessageInterface;
+import com.baiyajin.util.CustomException;
+import com.baiyajin.util.JWT;
+import io.jsonwebtoken.Claims;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -39,23 +42,38 @@ public class PageMessageController {
     @Transactional(rollbackFor = Exception.class)
     @ResponseBody
     public Map<String,Object> getMessage(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String,Object> map) {
-//        String token =  map.get("token").toString();
-        // TODO 验证token
-        String userId =  map.get("userId").toString();
-        Integer total = pageMessageInterface.selectCount(userId);
+        try{
+            if( map.get("token")==null || JWT.parseJWT(map.get("token").toString())==null ){
+                    throw new CustomException("登录已过期","-1");
+            }
+            String token =  map.get("token").toString();
+            Claims claims = JWT.parseJWT(token);
 
-        String pageNumS = map.get("pageNum").toString();
-        String pageSize =  map.get("pageSize").toString();
-        Integer pageNum = (1-Integer.parseInt(pageNumS)) * Integer.parseInt(pageSize);
-        map.put("pageNum",pageNum);
-        map.put("pageSize",Integer.parseInt(pageSize));
-        List<PageMessage> pageMessageList = pageMessageInterface.getMessage(map);
+            String userId = claims.getId();
+            Integer total = pageMessageInterface.selectCount(userId);
 
-        Map<String,Object> reMap = new HashMap<String,Object>();
-        reMap.put("data",pageMessageList);
-        reMap.put("total",total);
-        reMap.put("pagepageNum",pageNumS);
-        return reMap;
+            String pageNumS = map.get("pageNum").toString();
+            String pageSize =  map.get("pageSize").toString();
+            Integer pageNum = (Integer.parseInt(pageNumS)-1) * Integer.parseInt(pageSize);
+            map.put("pageNum",pageNum);
+            map.put("pageSize",Integer.parseInt(pageSize));
+            map.put("userId",userId);
+            List<PageMessage> pageMessageList = pageMessageInterface.getMessage(map);
+
+            Map<String,Object> reMap = new HashMap<String,Object>();
+            reMap.put("data",pageMessageList);
+            reMap.put("total",total);
+            reMap.put("pagepageNum",pageNumS);
+            reMap.put("msg","success");
+            return reMap;
+        }catch (CustomException ce){
+            Map<String,Object> reMap = new HashMap<String,Object>();
+            reMap.put("data",null);
+            reMap.put("total",0);
+            reMap.put("pagepageNum",0);
+            reMap.put("msg",ce.getMessage());
+            return reMap;
+        }
 
     }
 
@@ -73,17 +91,33 @@ public class PageMessageController {
     @Transactional(rollbackFor = Exception.class)
     @ResponseBody
     public Map<String,Object> delMessage(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String,Object> map) {
-        String ids = map.get("ids").toString();
-        int i = pageMessageInterface.deleteMessage(ids);
-        Map<String,Object> reMap = new HashMap<String,Object>();
-        if(i>0){
-            reMap.put("success",true);
-            reMap.put("msg","操作成功");
-        }else{
-            reMap.put("success",false);
-            reMap.put("msg","操作失败");
+        try {
+            if (map.get("ids")==null){
+                throw new CustomException("参数错误","-1");
+            }
+            if( map.get("token")==null || JWT.parseJWT(map.get("token").toString())==null ){
+                throw new CustomException("登录已过期","-1");
+            }
+            String token =  map.get("token").toString();
+            Claims claims = JWT.parseJWT(token);
+
+            String ids = map.get("ids").toString();
+            int i = pageMessageInterface.deleteMessage(ids);
+            Map<String, Object> reMap = new HashMap<String, Object>();
+            if (i > 0) {
+                reMap.put("success", true);
+                reMap.put("msg", "操作成功");
+            } else {
+                reMap.put("success", false);
+                reMap.put("msg", "操作失败");
+            }
+            return reMap;
+        }catch (CustomException ce) {
+            Map<String, Object> reMap = new HashMap<String, Object>();
+            reMap.put("success", false);
+            reMap.put("msg", ce.getMessage());
+            return reMap;
         }
-        return reMap;
     }
 
 //    /**
