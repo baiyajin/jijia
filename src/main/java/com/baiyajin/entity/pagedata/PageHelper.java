@@ -1,6 +1,7 @@
 package com.baiyajin.entity.pagedata;
 
 import com.baomidou.mybatisplus.annotations.TableName;
+import io.swagger.models.auth.In;
 import lombok.Data;
 
 import java.sql.Timestamp;
@@ -9,7 +10,7 @@ import java.sql.Timestamp;
 @TableName("page_helper")
 public class PageHelper {
     private String id;
-    private String artCode;
+    private Integer artCode;
     private String title;
     private String content;
     private String statusID;

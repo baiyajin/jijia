@@ -15,9 +15,37 @@
         <if test="type !=null and type != ''">
             AND a.type = #{type}
         </if>
-        <if test="userID !=null and userID != ''">
+        <if test="type == null or type == ''">
+            AND (a.type = '1' or (a.type = '2' and a.userID = #{userID}))
+        </if>
+        <if test="title !=null and title != ''">
+            AND a.name LIKE CONCAT('%', #{title}, '%')
+        </if>
+        <if test="userID != null and userID != '' and type == 2">
             AND a.userID = #{userID}
         </if>
         ORDER BY createTime DESC
+        LIMIT #{pageCurrent},#{pSize}
+    </select>
+
+    <!--查询总数-->
+    <select id="getCount" parameterType="com.baiyajin.vo.pagedata.ReportVo" resultType="java.lang.Integer">
+        SELECT
+        COUNT(*)
+        FROM page_report a
+        WHERE
+        a.statusID = "qy"
+        <if test="type != null and type != ''">
+            AND a.type = #{type}
+        </if>
+        <if test="type == null or type == ''">
+            AND (a.type = '1' or (a.type = '2' and a.userID = #{userID}))
+        </if>
+        <if test="title !=null and title != ''">
+            AND a.name LIKE CONCAT('%', #{title}, '%')
+        </if>
+        <if test="userID != null and userID != '' and type == 2">
+            AND a.userID = #{userID}
+        </if>
     </select>
 </mapper>

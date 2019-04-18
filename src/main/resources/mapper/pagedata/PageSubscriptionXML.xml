@@ -8,14 +8,22 @@
         a.id as "id",
         a.number as "number",
         a.title AS "title",
-        a.createTime AS "createTime"
+        a.createTime AS "createTime",
+        a.updateTime as "updateTime",
+        a.bookDate AS "bookDate",
+        a.bookPrice as "bookPrice",
+        a.isPush as "isPush"
         FROM page_subscription a
         WHERE
         a.statusID = "qy"
         <if test="number !=null and number != ''">
             AND a.number = #{number}
         </if>
+        <if test="userID !=null and userID != ''">
+            AND a.userID = #{userID}
+        </if>
         ORDER BY createTime DESC
+        LIMIT #{pageCurrent},#{pSize}
     </select>
 
 </mapper>

@@ -19,7 +19,11 @@
             <if test="title !=null and title != ''">
                 AND a.title LIKE CONCAT('%', #{title}, '%')
             </if>
-        ORDER BY a.publishTime DESC,a.artCode
+            <if test="code !=null and code != ''">
+                AND a.artCode = #{code}
+            </if>
+        ORDER BY a.publishTime DESC
+        LIMIT #{pageCurrent},#{pSize}
     </select>
 
 

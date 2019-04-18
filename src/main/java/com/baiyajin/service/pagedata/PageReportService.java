@@ -22,4 +22,9 @@ public class PageReportService extends ServiceImpl<PageReportMapper,PageReport> 
         page.setList(reportVoList);
         return page;
     }
+
+    @Override
+    public int getCount(ReportVo reportVo) {
+        return baseMapper.getCount(reportVo);
+    }
 }

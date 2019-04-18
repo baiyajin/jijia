@@ -6,6 +6,7 @@ import com.baiyajin.service.pagedata.PageUserInterface;
 import com.baiyajin.util.HashSalt;
 import com.baiyajin.util.JWT;
 import com.baiyajin.util.PhoneUtils;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,10 +35,14 @@ public class PageUserController {
 
 
     /**
-     * 后台用户登录
+     * 前台用户登录
      * @param
      * @return user
      */
+    @ApiOperation(value = "前台登录",notes =
+            "请求参数类型为:\t\nJSON\t\n"+
+                    "请求参数说明:\t\nphone（必填） ,password（必填）\t\n" +
+                    "请求参数列表为:\t\n{\"phone\":\"15288102051\",\"password\":\"123\"}")
     @RequestMapping(value = "/login", method = {RequestMethod.POST}, produces = "application/json;charset=UTF-8")
     @Transactional(rollbackFor = Exception.class)
     @ResponseBody
@@ -66,7 +71,7 @@ public class PageUserController {
 
                 if(systemUsers.size() > 0 && systemUsers.get(0).getPassword().equals(ecPassWord)){
                     m.put("message","登录成功");
-                    systemUsers.get(0).setToken(JWT.createJWT(map.get("phone").toString()));
+                    systemUsers.get(0).setToken(JWT.createJWT(systemUsers.get(0).getId()));
                     m.put("user",systemUsers.get(0));
                     return m;
                 }else if(systemUsers.size() == 0){
@@ -110,7 +115,7 @@ public class PageUserController {
 
             if (null == systemUsers || systemUsers.size() == 0) {
                 user.setId(UUID.randomUUID().toString().replace("-", ""));
-                user.setStatusID("jy");
+                user.setStatusID("qy");
 
                 String salt = HashSalt.encode(Long.parseLong(user.getPhone()));
                 String hashSalt = HashSalt.getMD5(salt);
