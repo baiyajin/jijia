@@ -64,10 +64,10 @@ public class PageMaterialService extends ServiceImpl<PageMaterialMapper,PageMate
             }
         }
 
-        if(map.get("stratDate")!=null){
-            Date stDate1 =  DateFormatUtil.stringToDate(map.get("stratDate").toString(),"yyyy-MM");
+        if(map.get("startDate")!=null){
+            Date stDate1 =  DateFormatUtil.stringToDate(map.get("startDate").toString(),"yyyy-MM");
             stDate1 =  DateFormatUtil.setDate(stDate1,5,1);
-            map.put("stratDate",DateFormatUtil.dateToString(stDate1));
+            map.put("startDate",DateFormatUtil.dateToString(stDate1));
         }
         if(map.get("endDate")!=null){
             Date endDate =  DateFormatUtil.stringToDate(map.get("endDate").toString(),"yyyy-MM");
