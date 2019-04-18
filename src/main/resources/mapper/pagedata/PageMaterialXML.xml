@@ -14,6 +14,8 @@
             <result column="mname" property="name"></result>
             <result column="price" property="price"></result>
             <result column="tongbi" property="tongbi"></result>
+            <result column="exponent" property="exponent"></result>
+            <result column="huanbi" property="huanbi"></result>
             <result column="areaID" property="areaID"></result>
             <result column="materialClassID" property="materialClassID"></result>
             <result column="statusID" property="statusID"></result>
@@ -22,7 +24,11 @@
         </collection>
     </resultMap>
 
-    <select id="getMaterialsAndClass" parameterType="java.util.Map" resultMap="MaterialAndClass">
+
+
+
+    <!-- 废弃-->
+<!--    <select id="getMaterialsAndClass" parameterType="java.util.Map" resultMap="MaterialAndClass">
       select * from page_material_class m
         left join
         (select *,id as mid,name as mname from
@@ -33,7 +39,131 @@
                 m.id = #{id}
             </if>
         </where>
+    </select>-->
+
+
+    <select id="getMaterialsAndClass" parameterType="java.util.Map" resultMap="MaterialAndClass">
+        select m.id,m.name,i.mcid as mid,mname,i2.price,exponent,tongbi,huanbi from (
+          select * from hlidx_category where path like concat('%',ifnull(#{id},''),'%')
+        ) m
+        left join
+        hl_main_material i on m.id=i.c3
+        left join
+        page_material_pice i2
+        on i.mcid = i2.mid
     </select>
+
+
+
+    <select id="getMaterialsClass" parameterType="java.util.Map" resultMap="MaterialAndClass">
+        select m.id,m.name,i.name as  mname,i.id as mid from
+          hlidx_category m
+        left join
+          hlidx_category i
+        on m.id=i.pid
+        where m.pid = 0
+
+    </select>
+
+
+    <select id="getMaterialsInfo"  parameterType="java.util.Map" resultType="java.util.Map">
+
+
+        <include refid="sqlString"/>
+
+        order by shot_by_calss
+
+    </select>
+
+
+<!--    <select id="getMaterialsInfoByYear"  parameterType="java.util.Map" resultType="java.util.Map">
+        select cid,name,pid,sort,mid,area,avg(price) as price,avg(exponent) as exponent,avg(tongbi) as tongbi,avg(huanbi) as huanbi,mdate from (
+            <include refid="sqlString"/>
+        ) mm group by cid
+
+        <if test="type!=quarter">
+            ,QUARTER(mdate)
+        </if>
+        <if test="type!=year" >
+            ,year(mdate)
+        </if>
+</select>-->
+
+    <select id="getMaterialsInfoByYear"  parameterType="java.util.Map" resultType="java.util.Map">
+        <include refid="sqlString"/>
+    </select>
+
+
+    <select id="getMaterialsInfoByArea"  parameterType="java.util.Map" resultType="java.util.Map">
+        select * from page_material_pice
+        where city = #{area}
+        <if test="matPid !=null and matPid != ''">
+           and mat_pid = #{matPid}
+        </if>
+        <if test="level !=null and level != ''">
+            and find_in_set(level,#{level})
+        </if>
+
+        <if test="stratDate !=null and stratDate != ''">
+            and  mdate >= #{stratDate}
+        </if>
+        <if test="endDate !=null and endDate != ''">
+            <![CDATA[
+                and  mdate <= #{endDate}
+                ]]>
+        </if>
+        order by mid
+
+    </select>
+
+
+
+
+    <sql id="sqlString">
+        select m.id as cid,m.name,m.pid,m.sort,m.level,
+        ifnull(i.mid,'') as mid,
+        ifnull(i.area,'') as area,
+        ifnull(price,'') as price,
+        ifnull(exponent,'') as exponent,
+        ifnull(tongbi,'') as tongbi,
+        ifnull(huanbi,'') as huanbi,
+        ifnull(mdate,'') as asmdate
+        from(
+        select * from hlidx_category
+        <where>
+            <if test="pid !=null and pid != ''">
+                and pid = #{pid}
+            </if>
+           <if test="level !=null and level != ''">
+                and find_in_set(level,#{level})
+            </if>
+            <if test="id !=null and id != ''">
+                and id = #{id}
+            </if>
+        </where>
+        ) m
+        left join
+        (select * from page_material_pice
+        <where>
+            <if test="area !=null and area != ''">
+                and area = #{area}
+            </if>
+            <if test="stratDate !=null and stratDate != ''">
+                and  mdate >= #{stratDate}
+            </if>
+            <if test="endDate !=null and endDate != ''">
+                <![CDATA[
+                and  mdate <= #{endDate}
+                ]]>
+            </if>
+            <if test="type !=null and type != ''">
+                and type = #{type}
+            </if>
+        </where>
+        ) i
+        on m.id = i.mid
+    </sql>
+
 
 
     <select id="findByTime" parameterType="com.baiyajin.vo.pagedata.MaterialVo" resultType="com.baiyajin.vo.pagedata.MaterialVo">
