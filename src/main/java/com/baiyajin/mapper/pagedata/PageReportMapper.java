@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface PageReportMapper extends BaseMapper<PageReport> {
     List<ReportVo> findList(ReportVo reportVo);
+
+    int getCount(ReportVo reportVo);
 }

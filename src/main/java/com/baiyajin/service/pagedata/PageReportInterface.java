@@ -9,4 +9,6 @@ public interface PageReportInterface extends IService<PageReport> {
 
     Page<ReportVo> findList(Page<ReportVo> page, ReportVo reportVo);
 
+    int getCount(ReportVo reportVo);
+
 }

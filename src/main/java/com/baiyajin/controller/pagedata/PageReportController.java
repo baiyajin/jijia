@@ -148,9 +148,19 @@ public class PageReportController {
     public Object findListByPage(ReportVo reportVo,String pageNum,String pageSize){
         Page<ReportVo> p = new Page();
         PageReport pageReport = new PageReport();
+        String token = reportVo.getToken();
+        Claims claims = JWT.parseJWT(token);
+
         if ("2".equals(reportVo.getType())){
-            String token = reportVo.getToken();
-            Claims claims = JWT.parseJWT(token);
+            if (claims == null){
+                return new Results(1,"请重新登录");
+            }else {
+                pageReport.setUserID(claims.getId());
+                reportVo.setUserID(claims.getId());
+            }
+        }
+
+        if(StringUtils.isBlank(reportVo.getType())){
             if (claims == null){
                 return new Results(1,"请重新登录");
             }else {
@@ -179,7 +189,7 @@ public class PageReportController {
             pageReport.setType(type);
         }
         pageReport.setStatusID("qy");
-        int count = pageReportInterface.selectCount(new EntityWrapper<PageReport>(pageReport));
+        int count = pageReportInterface.getCount(reportVo);
         Page<ReportVo> page = pageReportInterface.findList(p,reportVo);
         if (page == null || page.getList() == null ||page.getList().size() == 0){
             return new Results(1,"暂无数据");
