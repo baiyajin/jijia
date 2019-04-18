@@ -8,7 +8,10 @@
         a.id as "id",
         a.number as "number",
         a.title AS "title",
-        a.createTime AS "createTime"
+        a.createTime AS "createTime",
+        a.bookDate AS "bookDate",
+        a.bookPrice as "bookPrice",
+        a.isPush as "isPush"
         FROM page_subscription a
         WHERE
         a.statusID = "qy"
