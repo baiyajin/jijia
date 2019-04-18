@@ -41,7 +41,6 @@ public class PageHelperController {
     @Transactional(rollbackFor = Exception.class)
     @ResponseBody
     public Object addHelper(PageHelper pageHelper){
-
         String publishState = "1";
         if (pageHelper != null){
             publishState = pageHelper.getPublishState();
