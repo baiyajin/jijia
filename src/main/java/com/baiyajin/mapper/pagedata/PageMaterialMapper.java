@@ -26,7 +26,7 @@ public interface PageMaterialMapper extends BaseMapper<PageMaterial> {
 
     public List<Map<String,Object>> getMaterialsInfoByYear(Map<String,Object> map);
 
-
+    public List<Map<String,Object>> getMaterialsInfoByArea(Map<String,Object> map);
 
 
 }

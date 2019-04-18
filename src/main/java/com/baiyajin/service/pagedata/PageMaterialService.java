@@ -3,6 +3,7 @@ package com.baiyajin.service.pagedata;
 import com.baiyajin.entity.pagedata.MaterialAndClass;
 import com.baiyajin.entity.pagedata.PageMaterial;
 import com.baiyajin.mapper.pagedata.PageMaterialMapper;
+import com.baiyajin.util.CustomException;
 import com.baiyajin.util.DateFormatUtil;
 import com.baiyajin.vo.pagedata.MaterialVo;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
@@ -40,12 +41,6 @@ public class PageMaterialService extends ServiceImpl<PageMaterialMapper,PageMate
 
     @Override
     public List<Map<String,Object>> getMaterialsInfo(Map<String,Object> map) throws ParseException {
-
-
-
-
-
-
         //默认查询一级分类
         if(map.get("level")==null){
             map.put("level",1);
@@ -97,9 +92,20 @@ public class PageMaterialService extends ServiceImpl<PageMaterialMapper,PageMate
             map.put("type","year");
         }*/
 
-
-
          return this.getMaterialsInfoByYear(map);
+    }
+
+    @Override
+    public List<Map<String, Object>> getMaterialsInfoByArea(Map<String, Object> map) throws ParseException {
+        //默认云南
+        if (map.get("area")==null || map.get("area").toString().equals("")){
+            map.put("area","53");
+        }
+           // throw new CustomException("参数错误","-1");
+//       String areas = map.get("areas").toString();
+//
+//        map.put("areas",areas);
+        return  baseMapper.getMaterialsInfoByArea(map);
     }
 
 

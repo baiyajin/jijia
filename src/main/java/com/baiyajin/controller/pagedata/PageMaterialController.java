@@ -111,6 +111,18 @@ public class PageMaterialController {
         return pageMaterialInterface.getMaterialsInfo(map);
     }
 
+    @ApiOperation(value = "",notes = "json")
+    @ApiImplicitParams({@ApiImplicitParam(name = "",value =  "",dataType = "String")})
+    @RequestMapping(value = "/getMaterialsInfoByArea", method = {RequestMethod.POST}, produces = "application/json;charset=UTF-8")
+    @Transactional(rollbackFor = Exception.class)
+    @ResponseBody
+    public List<Map<String,Object>> getMaterialsInfoByArea(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String,Object> map) throws ParseException {
+
+            return pageMaterialInterface.getMaterialsInfoByArea(map);
+
+
+    }
+
 
 
  /*   @RequestMapping(value = "/getMaterialsInfoByYear", method = {RequestMethod.POST}, produces = "application/json;charset=UTF-8")

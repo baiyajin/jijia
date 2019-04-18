@@ -24,6 +24,9 @@ public interface PageMaterialInterface extends IService<PageMaterial> {
 
     public List<Map<String,Object>> getMaterialsInfo(Map<String,Object> map) throws ParseException;
 
+    public List<Map<String,Object>> getMaterialsInfoByArea(Map<String,Object> map) throws ParseException;
+
+
 
 
 }

@@ -50,12 +50,14 @@ public class PageMessageController {
             Claims claims = JWT.parseJWT(token);
 
             String userId = claims.getId();
+           userId = "2";
             Integer total = pageMessageInterface.selectCount(userId);
-
-           // if(map.get("pageNum")==null || map.get("pageSize")==null){
-                  String pageNumS = map.get("pageNum").toString();
-                  String pageSize =  map.get("pageSize").toString();
-         //   }
+            String pageNumS = "1";
+            String pageSize =  "10";
+            if(map.get("pageNum")==null || map.get("pageSize")==null){
+                  pageNumS = "1";
+                  pageSize =  "10";
+            }
 
 
 
@@ -79,7 +81,6 @@ public class PageMessageController {
             reMap.put("msg",ce.getMessage());
             return reMap;
         }
-
     }
 
 

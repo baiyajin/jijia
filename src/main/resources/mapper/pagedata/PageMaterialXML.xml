@@ -24,6 +24,9 @@
         </collection>
     </resultMap>
 
+
+
+
     <!-- 废弃-->
 <!--    <select id="getMaterialsAndClass" parameterType="java.util.Map" resultMap="MaterialAndClass">
       select * from page_material_class m
@@ -89,6 +92,30 @@
     <select id="getMaterialsInfoByYear"  parameterType="java.util.Map" resultType="java.util.Map">
         <include refid="sqlString"/>
     </select>
+
+
+    <select id="getMaterialsInfoByArea"  parameterType="java.util.Map" resultType="java.util.Map">
+        select * from page_material_pice
+        where city = #{area}
+        <if test="matPid !=null and matPid != ''">
+           and mat_pid = #{matPid}
+        </if>
+        <if test="level !=null and level != ''">
+            and find_in_set(level,#{level})
+        </if>
+
+        <if test="stratDate !=null and stratDate != ''">
+            and  mdate >= #{stratDate}
+        </if>
+        <if test="endDate !=null and endDate != ''">
+            <![CDATA[
+                and  mdate <= #{endDate}
+                ]]>
+        </if>
+        order by mid
+
+    </select>
+
 
 
 
