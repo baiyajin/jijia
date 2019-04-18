@@ -7,7 +7,11 @@
     <select id="getMessage" parameterType="java.util.Map" resultType="com.baiyajin.entity.pagedata.PageMessage">
         select *  from page_message
         where is_del = 0
-        and userId = #{userId}
+
+          and userId = #{userId}
+        <if test="number!=null">
+          and number = #{number}
+        </if>
         limit #{pageNum},#{pageSize}
     </select>
 
