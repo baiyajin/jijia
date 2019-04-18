@@ -41,14 +41,12 @@ public class PageHelperController {
     @Transactional(rollbackFor = Exception.class)
     @ResponseBody
     public Object addHelper(PageHelper pageHelper){
-        String publishState = "1";
-        if (pageHelper != null){
-            publishState = pageHelper.getPublishState();
-        }
+
+        String publishState =((pageHelper == null ||StringUtils.isBlank(pageHelper.getPublishState())) ? "1":pageHelper.getPublishState()) ;
         if ("0".equals(publishState)){
             pageHelper.setPublishTime(new Timestamp(System.currentTimeMillis()));
         }
-
+        pageHelper.setPublishState(publishState);
         pageHelper.setId(IdGenerate.uuid());
         pageHelper.setStatusID("qy");
         pageHelper.setCreateTime(new Timestamp(System.currentTimeMillis()));
