@@ -52,8 +52,13 @@ public class PageMessageController {
             String userId = claims.getId();
             Integer total = pageMessageInterface.selectCount(userId);
 
-            String pageNumS = map.get("pageNum").toString();
-            String pageSize =  map.get("pageSize").toString();
+           // if(map.get("pageNum")==null || map.get("pageSize")==null){
+                  String pageNumS = map.get("pageNum").toString();
+                  String pageSize =  map.get("pageSize").toString();
+         //   }
+
+
+
             Integer pageNum = (Integer.parseInt(pageNumS)-1) * Integer.parseInt(pageSize);
             map.put("pageNum",pageNum);
             map.put("pageSize",Integer.parseInt(pageSize));
