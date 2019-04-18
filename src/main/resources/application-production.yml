@@ -23,3 +23,6 @@ server:
 #    key-alias: cherry
   tomcat:
     uri-encoding: UTF-8
+logback:
+  path: /logs/baiyajin_production.log
+  path_time: /logs/baiyajin_production_%d{yyyy-MM-dd}.log

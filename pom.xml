@@ -9,9 +9,7 @@
 	<name>baiyajin</name>
 	<description>baiyajin business project for Spring Boot</description>
 
-	<packaging>jar</packaging>
-
-
+	<packaging>${web.packaging}</packaging>
 
 
 	<!--  Spring Boot -->
@@ -21,8 +19,6 @@
 		<version>2.0.1.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-
-
 	<properties>
 		<!-- 指定编码格式UTF-8 -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -31,15 +27,40 @@
 		<java.version>1.8</java.version>
 	</properties>
 
+
+
+
+
+
+
 	<dependencies>
-
-
 		<!--使用springboot的内置tomcat时，就不需要引入javaee-api了，spring-boot已经包含了。-->
 		<!-- SpringBoot Web容器 -->
 		<dependency>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-web</artifactId>
-	</dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<!-- war包部署移除嵌入式tomcat插件 -->
+			${web.tomcat_war}
+		</dependency>
+
+
+
+		<!--添加servlet-api的依赖,保证编译正确添加对Servlet-api的依赖,任选其一-->
+		<!-- war包部署添加servlet依赖 -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- 添加servlet-api的依赖 -->
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-servlet-api</artifactId>
+			<version>8.0.36</version>
+			<scope>provided</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -49,6 +70,19 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jdbc</artifactId>
 		</dependency>
+
+		<!--SpringBoot+JWT+SpringSecurity对api进行授权保护-->        <!--jwt-->
+		<!--<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.0</version>
+        </dependency>-->
+
+		<!--这种方式是直接生成token-->
 		<dependency>
 			<groupId>com.auth0</groupId>
 			<artifactId>java-jwt</artifactId>
@@ -59,6 +93,7 @@
 			<artifactId>jjwt</artifactId>
 			<version>0.9.0</version>
 		</dependency>
+
 
 		<dependency> <!-- API -->
 			<groupId>io.springfox</groupId>
@@ -79,21 +114,25 @@
 			<version>1.2.44</version>
 		</dependency>
 
+		<!--使用POI库，在实例化XSSFWorkbook对象时，报java.lang.ClassNotFoundException: org.apache.xmlbeans.XmlException错误-->
 		<dependency>
 			<groupId>org.apache.xmlbeans</groupId>
 			<artifactId>xmlbeans</artifactId>
 			<version>3.0.2</version>
 		</dependency>
+		<!--解决报这个错Caused by: java.lang.ClassNotFoundException: org.dom4j.DocumentException-->
 		<dependency>
 			<groupId>dom4j</groupId>
 			<artifactId>dom4j</artifactId>
 			<version>1.6.1</version>
 		</dependency>
+		<!--解决报这个错java.lang.ClassNotFoundException: org.apache.poi.POIXMLTypeLoader-->
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
 			<version>3.15</version>
 		</dependency>
+		<!--解决报这个错org.openxmlformats.schemas.spreadsheetml.x2006.main.CTSheet-->
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-ooxml-schemas</artifactId>
@@ -104,11 +143,15 @@
 			<artifactId>poi-ooxml</artifactId>
 			<version>3.15</version>
 		</dependency>
+
+
+		<!--盐加密用户的密码-->
 		<dependency>
 			<groupId>org.apache.shiro</groupId>
 			<artifactId>shiro-core</artifactId>
 			<version>1.2.3</version>
 		</dependency>
+
 		<dependency>
 			<groupId>com.baomidou</groupId>
 			<artifactId>mybatis-plus</artifactId>
@@ -124,6 +167,8 @@
 			<artifactId>mybatis-spring-boot-autoconfigure</artifactId>
 			<version>1.3.2</version>
 		</dependency>
+
+		<!-- MySQL 连接驱动依赖 -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
@@ -134,6 +179,9 @@
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
+
+
+
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
@@ -144,11 +192,15 @@
 			<artifactId>commons-fileupload</artifactId>
 			<version>1.3.1</version>
 		</dependency>
+
+		<!--热启动-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+
+		<!-- 引入freeMarker的依赖包. -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-freemarker</artifactId>
@@ -158,16 +210,24 @@
 			<artifactId>hutool-all</artifactId>
 			<version>3.3.2</version>
 		</dependency>
+
 		<dependency>
 			<groupId>com.vdurmont</groupId>
 			<artifactId>emoji-java</artifactId>
 			<version>3.2.0</version>
 		</dependency>
+
+
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>druid</artifactId>
 			<version>1.1.0</version>
 		</dependency>
+
+
+
+
+		<!--添加外部依赖-->
 		<dependency>
 			<groupId>websocket-api</groupId>
 			<artifactId>websocket-api</artifactId>
@@ -175,11 +235,17 @@
 			<scope>system</scope>
 			<systemPath>${basedir}/src/main/resources/static/lib/websocket-api.jar</systemPath>
 		</dependency>
+
+
+		<!-- 从数据库获取数据封装成流返回给前端下载 -->
 		<dependency>
 			<groupId>net.sourceforge.jexcelapi</groupId>
 			<artifactId>jxl</artifactId>
 			<version>2.6.12</version>
 		</dependency>
+
+
+		<!-- 添加单元测试 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -198,32 +264,46 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-test</artifactId>
 		</dependency>
+
+		<!--websocket-->
+		<!--springboot的高级组件会自动引用基础的组件，像spring-boot-starter-websocket就引入了spring-boot-starter-web和spring-boot-starter，所以不要重复引入。-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-websocket</artifactId>
 			<version>1.3.5.RELEASE</version>
 		</dependency>
+
+
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
 			<version>2.5</version>
 		</dependency>
-		<dependency>
-			<groupId>org.apache.tomcat</groupId>
-			<artifactId>tomcat-servlet-api</artifactId>
-			<version>8.0.36</version>
-			<scope>provided</scope>
-		</dependency>
+
+
+
+
+
+		<!--yml格式-->
 		<dependency>
 			<groupId>org.yaml</groupId>
 			<artifactId>snakeyaml</artifactId>
 			<version>${snakeyaml.version}</version>
 		</dependency>
+
+		<!--spring boot 版本-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot</artifactId>
 			<version>2.0.1.RELEASE</version>
 		</dependency>
+
+
+		<!--
+        The final step in the process is to ensure that the embedded servlet container doesn’t interfere with the servlet container to which the war file will be deployed. To do so, you need to mark the embedded servlet container dependency as provided.
+        这个过程的最后一步是确保嵌入的servlet容器不会干扰部署war文件的servlet容器。为此，需要按照提供的方式标记嵌入式servlet容器依赖关系。-->
+
+
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-web</artifactId>
@@ -234,10 +314,14 @@
 			<artifactId>baiyajin</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+
+
 	</dependencies>
+	<!-- 使用 maven 打jar包 -->
 	<build>
 		<finalName>ROOT</finalName>
 		<plugins>
+			<!--设置maven-war-plugins插件，否则外部依赖无法打进war包-->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
@@ -253,7 +337,29 @@
 					</webResources>
 				</configuration>
 			</plugin>
+
+			<!--读取配置文件中的变量-->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>properties-maven-plugin</artifactId>
+				<version>1.0-alpha-2</version>
+				<executions>
+					<execution>
+						<phase>initialize</phase>
+						<goals>
+							<goal>read-project-properties</goal>
+						</goals>
+						<configuration>
+							<files>
+								<file>${basedir}/src/main/resources/application.yml</file>
+							</files>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
+
+
 
 </project>

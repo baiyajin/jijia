@@ -1,7 +1,17 @@
+web:
+  file-path: file:/home/
+  IP: localhost
+  #  IP: 192.168.8.29
+  #  IP: 192.168.8.19
+  packaging: war
+  tomcat_war: <exclusions><exclusion><groupId>org.springframework.boot</groupId><artifactId>spring-boot-starter-tomcat</artifactId></exclusion></exclusions>
+
 #spring
 spring:
   profiles:
-      active: develop
+      active: test
+#      active: production
+#      active: develop
   freemarker:
     allow-request-override: false #页面热加载
     suffix: .html
@@ -28,11 +38,7 @@ spring:
     static-path-pattern: /**
   resources:
     static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:${web.file-path}
-web:
-  file-path: file:/home/
-  IP: localhost
-#  IP: 192.168.8.29
-#  IP: 192.168.8.19
+
 
 #  servlet:
 #    context-path: /baiyajin
@@ -41,7 +47,7 @@ web:
 logging:
   level:
     com.baiyajin: DEBUG
-  config: classpath:logback.xml #实体扫描，多个package用逗号或者分号分隔
+  config: classpath:logback_spring.xml #实体扫描，多个package用逗号或者分号分隔
 
 
 #mybatis plus 设置
@@ -49,6 +55,9 @@ mybatis-plus:
   mapper-locations: classpath:mapper/*/*.xml
   typeAliasesPackage: com.baiyajin.entity #实体扫描，多个package用逗号或者分号分隔
   global-config.refresh-mapper: true #刷新mapper 调试神器
+
+
+
 
 
 

@@ -22,21 +22,19 @@ public class SwaggerConfig{
     @Bean
     public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiInfo()).select()
+                .apiInfo(new ApiInfoBuilder()
+                        .title("标题：云南省建设工程材料设备价格监测系统_接口文档")
+                        .description("描述：用于运维前端人员查看接口地址")
+                        .contact(new Contact("baiyajin", "http://localhost:8888/baiyajin/start/?sweep_code_draw=0", "baiyajin110@qq.com"))
+                        .version("版本号:1.0")
+                        .build())
+                .select()
                 .apis(RequestHandlerSelectors.basePackage("com.baiyajin.controller"))
-//                .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
                 .paths(PathSelectors.any())
                 .build();
     }
 
-    private ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
-                .title("Fast 疾速开发  RESTful APIs")
-                .description("快速上手,快速开发,快速交接")
-                .contact(new Contact("yajin", "bai", "baiyajin110@qq.com"))
-                .version("1.0.0")
-                .build();
-    }
+
 
 
 
