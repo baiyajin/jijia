@@ -15,14 +15,13 @@
         <if test="type !=null and type != ''">
             AND a.type = #{type}
         </if>
-        <if test="type ==null and type == ''">
-            AND a.userID = #{userID}
-            and (a.type == '1' or a.type == '2')
+        <if test="type == null or type == ''">
+            AND (a.type = '1' or (a.type = '2' and a.userID = #{userID}))
         </if>
         <if test="title !=null and title != ''">
             AND a.name LIKE CONCAT('%', #{title}, '%')
         </if>
-        <if test="userID !=null and userID != ''">
+        <if test="userID != null and userID != '' and type == 2">
             AND a.userID = #{userID}
         </if>
         ORDER BY createTime DESC
@@ -36,16 +35,16 @@
         FROM page_report a
         WHERE
         a.statusID = "qy"
-        <if test="type !=null and type != ''">
+        <if test="type != null and type != ''">
             AND a.type = #{type}
         </if>
-        <if test="type == null and type == ''">
-            AND (a.type == '1' or (a.type == '2' and a.userID = #{userID}))
+        <if test="type == null or type == ''">
+            AND (a.type = '1' or (a.type = '2' and a.userID = #{userID}))
         </if>
         <if test="title !=null and title != ''">
             AND a.name LIKE CONCAT('%', #{title}, '%')
         </if>
-        <if test="userID !=null and userID != '' and type == 2">
+        <if test="userID != null and userID != '' and type == 2">
             AND a.userID = #{userID}
         </if>
     </select>
