@@ -122,6 +122,7 @@
 
 
     <sql id="sqlString">
+        select * from (
         select m.id as cid,m.name,m.pid,m.sort,m.level,
         ifnull(i.mid,'') as mid,
         ifnull(i.area,'') as area,
@@ -129,7 +130,8 @@
         ifnull(exponent,'') as exponent,
         ifnull(tongbi,'') as tongbi,
         ifnull(huanbi,'') as huanbi,
-        ifnull(mdate,'') as asmdate
+        ifnull(mdate,'') as asmdate,
+        m.shot_by_calss
         from(
         select * from hlidx_category
         <where>
@@ -151,7 +153,7 @@
                 and find_in_set(area,#{area})
             </if>
             <if test="startDate !=null and startDate != ''">
-                and  mdate >= #{startDate}
+                and mdate >= #{startDate}
             </if>
             <if test="endDate !=null and endDate != ''">
                 <![CDATA[
@@ -164,6 +166,7 @@
         </where>
         ) i
         on m.id = i.mid
+        ) m2 where mid !=''
     </sql>
 
 
