@@ -67,13 +67,15 @@
 
 
     <select id="getMaterialsInfo"  parameterType="java.util.Map" resultType="java.util.Map">
-
-
         <include refid="sqlString"/>
-
-        order by shot_by_calss
-
+        <if test="orderType==1">
+            order by area,asmdate
+        </if>
+        <if test="orderType==null">
+            order by shot_by_calss
+        </if>
     </select>
+
 
 
 <!--    <select id="getMaterialsInfoByYear"  parameterType="java.util.Map" resultType="java.util.Map">
@@ -146,10 +148,10 @@
         (select * from page_material_pice
         <where>
             <if test="area !=null and area != ''">
-                and area = #{area}
+                and find_in_set(area,#{area})
             </if>
-            <if test="stratDate !=null and stratDate != ''">
-                and  mdate >= #{stratDate}
+            <if test="startDate !=null and startDate != ''">
+                and  mdate >= #{startDate}
             </if>
             <if test="endDate !=null and endDate != ''">
                 <![CDATA[
