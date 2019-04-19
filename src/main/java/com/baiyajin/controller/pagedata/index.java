@@ -18,25 +18,28 @@ import java.util.Map;
 public class index {
 
 
-    @ApiOperation(value = "后台登录主页地址:{http://192.168.8.19:8018/templates/test/index.html}",notes = "test后台登录主页地址:{http://192.168.8.19:8018/templates/test/index.html}")
+    @ApiOperation(value = "后台登录主页地址:http://192.168.8.19:8018/templates/test/index.html",notes = "后台登录主页地址:http://192.168.8.19:8018/templates/test/index.html")
     @RequestMapping(value = "/test1", method = {RequestMethod.POST}, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String test(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String,Object> map) {
-        return "/templates/test/index.html";
+    public void test(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String,Object> map) {
+    }
+
+    @ApiOperation(value = "JIRA地址:http://192.168.8.19:8011",notes = "JIRA地址:http://192.168.8.19:8011")
+    @RequestMapping(value = "/test4", method = {RequestMethod.POST}, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public void test4(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String,Object> map) {
     }
 
     @ApiOperation(value = "大屏主页地址:{http://192.168.8.19:8018/home/dist/index.html}",notes = "大屏主页地址:{http://192.168.8.19:8018/home/dist/index.html}")
     @RequestMapping(value = "/test2", method = {RequestMethod.POST}, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String distD(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String,Object> map) {
-        return "http://192.168.8.19:8018/home/dist/index.html#/";
+    public void distD(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String,Object> map) {
     }
 
     @ApiOperation(value = "小屏主页地址:{/templates/distX/index.html}",notes = "小屏主页地址:{/templates/distX/index.html}")
     @RequestMapping(value = "/test3", method = {RequestMethod.POST}, produces = "application/json;charset=UTF-8")
     @ResponseBody
-    public String distX(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String,Object> map) {
-        return "/templates/distX/index.html";
+    public void distX(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String,Object> map) {
     }
 
 

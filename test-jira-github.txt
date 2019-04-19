@@ -1,5 +1,0 @@
-JIRA外网地址：http://345a237b.ngrok.io
-
-使用git命令提交时按如下格式：
-git commit -m 'BAI-1 提交的内容'
-BAI-1 必须得填，然后空格，然后是你反馈的内容

@@ -97,10 +97,14 @@ public class PageUserController {
 
 
     /**
-     * 后台用户注册账号
+     * 前台用户注册账号
      * @param
-     * @return
+     * @return user
      */
+    @ApiOperation(value = "前台用户注册账号",notes =
+            "请求参数类型为:\t\nJSON\t\n"+
+                    "请求参数说明:\t\nphone（必填） ,password（必填）,name（必填）\t\n" +
+                    "请求参数列表为:\t\n{\"phone\":\"15288102051\",\"password\":\"123\",\"name\":\"baiyajin\"}")
     @RequestMapping(value = "/registerAccount", method = {RequestMethod.POST}, produces = "application/json;charset=UTF-8")
     @Transactional(rollbackFor = Exception.class)
     @ResponseBody
