@@ -48,6 +48,7 @@ public class WebMvcConfig implements WebMvcConfigurer  {
 
         //将C:/home/的目录映射到spring boot 项目中
         registry.addResourceHandler("/home/**").addResourceLocations("file:/home/");
+        registry.addResourceHandler("/static/img/**").addResourceLocations("file:/home/static/img/");
 
     }
 
