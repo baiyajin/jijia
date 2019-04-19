@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 import lombok.Data;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 @Data
 @TableName("page_report")
@@ -22,6 +23,9 @@ public class PageReport {
   private String timeInterval;
   private String materialClassID;
   private String contrastRegionID;
+
+  private Date startTime;
+  private Date endTime;
 
 
 

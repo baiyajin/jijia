@@ -1,7 +1,7 @@
 #spring
 spring:
   profiles:
-      active: develop
+      active: test
   freemarker:
     allow-request-override: false #页面热加载
     suffix: .html

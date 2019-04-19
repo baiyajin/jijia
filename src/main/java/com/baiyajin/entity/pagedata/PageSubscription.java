@@ -6,6 +6,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.Date;
 
 @Data
 @TableName("page_subscription")
@@ -22,6 +23,9 @@ public class PageSubscription {
   private BigDecimal bookPrice;//订阅时材料价格
   private String bookDate; //订阅要关注的数据的时间
   private String remark;
+
+  private Date startTime;
+  private Date endTime;
 
   @TableField(exist = false)
   private String token;

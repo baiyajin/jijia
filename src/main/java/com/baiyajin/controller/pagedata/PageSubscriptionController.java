@@ -3,10 +3,7 @@ package com.baiyajin.controller.pagedata;
 import com.baiyajin.entity.pagedata.PageReport;
 import com.baiyajin.entity.pagedata.PageSubscription;
 import com.baiyajin.service.pagedata.PageSubscriptionInterface;
-import com.baiyajin.util.IdGenerate;
-import com.baiyajin.util.JWT;
-import com.baiyajin.util.PageUtils;
-import com.baiyajin.util.Results;
+import com.baiyajin.util.*;
 import com.baiyajin.vo.pagedata.Page;
 import com.baiyajin.vo.pagedata.ReportVo;
 import com.baiyajin.vo.pagedata.SubscriptionVo;
@@ -19,14 +16,12 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -55,7 +50,7 @@ public class PageSubscriptionController {
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     @Transactional(rollbackFor = Exception.class)
     @ResponseBody
-    public Object add(PageSubscription pageSubscription){
+    public Object add(PageSubscription pageSubscription, @RequestParam("startTimeStr") String startTimeStr, @RequestParam("endTimeStr")String endTimeStr){
         String token = pageSubscription.getToken();
         Claims claims = JWT.parseJWT(token);
         if (claims == null){
@@ -63,7 +58,13 @@ public class PageSubscriptionController {
         }else {
             pageSubscription.setUserID(claims.getId());
         }
-
+        if (StringUtils.isNotBlank(startTimeStr) && StringUtils.isNotBlank(endTimeStr)){
+            pageSubscription.setStartTime(DateUtils.setDate(DateUtils.parseDate(startTimeStr,"yyyy-mm"),5,01));
+            Date endDate =  DateUtils.parseDate(endTimeStr,"yyyy-MM");
+            String lastDay = DateUtils.getDateLastDay(endDate);
+            Date endTimeDate = DateUtils.parseDate(lastDay,"yyyy-MM-dd");
+            pageSubscription.setEndTime(DateUtils.parseDate(lastDay,"yyyy-MM-dd"));
+        }
         pageSubscription.setId(IdGenerate.uuid());
         pageSubscription.setCreateTime(new Timestamp(System.currentTimeMillis()));
         pageSubscription.setUpdateTime(new Timestamp(System.currentTimeMillis()));

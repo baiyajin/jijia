@@ -2,10 +2,7 @@ package com.baiyajin.controller.pagedata;
 
 import com.baiyajin.entity.pagedata.PageReport;
 import com.baiyajin.service.pagedata.PageReportInterface;
-import com.baiyajin.util.IdGenerate;
-import com.baiyajin.util.JWT;
-import com.baiyajin.util.PageUtils;
-import com.baiyajin.util.Results;
+import com.baiyajin.util.*;
 import com.baiyajin.vo.pagedata.Page;
 import com.baiyajin.vo.pagedata.ReportVo;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
@@ -19,15 +16,14 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.lang.reflect.Parameter;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -53,18 +49,26 @@ public class PageReportController {
      */
     @ApiOperation(value = "新增报告" ,notes = "新增报告默认状态ID为启用(qy)，type（1 平台发布,2 我的,3 全部），logo为图片上传，状态默认为qy，若不默认可传入statusID：jy")
     @ApiImplicitParams({@ApiImplicitParam(name = "name(必填),logo（必填），content(必填),publishState(非必填)，" +
+            "startTimeStr(报告中材料的开始时间，非必填),endTimeStr(报告中材料的结束时间，非必填)" +
             "mark(非必填)，token（必填）,timeInterval(时间区域，选择传入)，materialClassID(材料类型ID，选择传入)，contrastRegionID(对比地区，可多个，用逗号隔开)"
             ,value =  "name:123,logo:safdaf/sfsa.*,content:asfa,mark:sdaf，timeInterval：2019-04-19，materialClassID：12346，contrastRegionID：132,asdf,123",dataType = "String",paramType = "body")})
     @RequestMapping(value = "/addReport",method = RequestMethod.POST)
     @Transactional(rollbackFor = Exception.class)
     @ResponseBody
-    public Object addReport (PageReport pageReport){
+    public Object addReport (PageReport pageReport,@RequestParam("startTimeStr") String startTimeStr,@RequestParam("endTimeStr")String endTimeStr){
         String token = pageReport.getToken();
         Claims claims = JWT.parseJWT(token);
         if (claims == null){
             return new Results(1,"请重新登录");
         }else {
             pageReport.setUserID(claims.getId());
+        }
+        if (StringUtils.isNotBlank(startTimeStr) && StringUtils.isNotBlank(endTimeStr)){
+            pageReport.setStartTime(DateUtils.setDate(DateUtils.parseDate(startTimeStr,"yyyy-mm"),5,01));
+            Date endDate =  DateUtils.parseDate(endTimeStr,"yyyy-MM");
+            String lastDay = DateUtils.getDateLastDay(endDate);
+            Date endTimeDate = DateUtils.parseDate(lastDay,"yyyy-MM-dd");
+            pageReport.setEndTime(DateUtils.parseDate(lastDay,"yyyy-MM-dd"));
         }
         pageReport.setType("2");
         pageReport.setId(IdGenerate.uuid());
@@ -117,12 +121,23 @@ public class PageReportController {
     @RequestMapping(value = "/updateReport",method = RequestMethod.POST)
     @ResponseBody
     @Transactional(rollbackFor = Exception.class)
-    public Object updateReport(PageReport pageReport){
+    public Object updateReport(PageReport pageReport,@RequestParam("startTimeStr") String startTimeStr,@RequestParam("endTimeStr")String endTimeStr){
+
+
         String id = pageReport.getId();
         PageReport p = pageReportInterface.selectById(id);
         if(p == null){
             return new Results(1,"该报告不存在");
         }
+
+        if (StringUtils.isNotBlank(startTimeStr) && StringUtils.isNotBlank(endTimeStr)){
+            pageReport.setStartTime(DateUtils.setDate(DateUtils.parseDate(startTimeStr,"yyyy-mm"),5,01));
+            Date endDate =  DateUtils.parseDate(endTimeStr,"yyyy-MM");
+            String lastDay = DateUtils.getDateLastDay(endDate);
+            Date endTimeDate = DateUtils.parseDate(lastDay,"yyyy-MM-dd");
+            pageReport.setEndTime(DateUtils.parseDate(lastDay,"yyyy-MM-dd"));
+        }
+
         pageReport.setUpdateTime(new Timestamp(System.currentTimeMillis()));
         try {
             pageReportInterface.updateById(pageReport);
