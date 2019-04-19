@@ -5,6 +5,7 @@ import com.baiyajin.service.pagedata.PageMessageInterface;
 import com.baiyajin.util.CustomException;
 import com.baiyajin.util.JWT;
 import io.jsonwebtoken.Claims;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -22,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Api("消息")
 @Controller
 @RequestMapping("/PageMessageController")
 public class PageMessageController {

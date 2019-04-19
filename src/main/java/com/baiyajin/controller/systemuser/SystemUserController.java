@@ -4,6 +4,7 @@ import com.baiyajin.entity.systemuser.SystemUser;
 import com.baiyajin.service.systemuser.SystemUserInterface;
 import com.baiyajin.util.*;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.crypto.hash.SimpleHash;
@@ -23,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+@Api("后台用户")
 @Controller
 @RequestMapping("/SystemUserController")
 public class SystemUserController {

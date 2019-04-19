@@ -3,6 +3,7 @@ package com.baiyajin.controller.systemuser;
 import com.baiyajin.entity.systemuser.SystemJurisdiction;
 import com.baiyajin.service.systemuser.SystemJurisdictionInterface;
 import com.baiyajin.util.ReturnModel;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Api("权限")
 @Controller
 @RequestMapping("/SystemJurisdictionController")
 public class SystemJurisdictionController {

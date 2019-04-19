@@ -2,6 +2,7 @@ package com.baiyajin.controller.pagedata;
 
 import com.baiyajin.entity.pagedata.PageMaterialClass;
 import com.baiyajin.service.pagedata.PageMaterialClassInterface;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Api("材料类")
 @Controller
 @RequestMapping("/PageMaterialClassController")
 public class PageMaterialClassController {

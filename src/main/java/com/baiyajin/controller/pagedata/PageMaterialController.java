@@ -6,6 +6,7 @@ import com.baiyajin.service.pagedata.PageMaterialInterface;
 import com.baiyajin.util.IdGenerate;
 import com.baiyajin.util.Results;
 import com.baiyajin.vo.pagedata.MaterialVo;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -22,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Api("材料")
 @Controller
 @RequestMapping("/PageMaterialController")
 public class PageMaterialController {

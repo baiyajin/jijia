@@ -12,6 +12,7 @@ import com.baiyajin.vo.pagedata.ReportVo;
 import com.baiyajin.vo.pagedata.SubscriptionVo;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import io.jsonwebtoken.Claims;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -30,6 +31,7 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
+@Api("订阅")
 @Controller
 @RequestMapping("/PageSubscriptionController")
 public class PageSubscriptionController {

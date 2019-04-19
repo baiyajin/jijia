@@ -6,6 +6,7 @@ import com.baiyajin.service.pagedata.PageUserInterface;
 import com.baiyajin.util.HashSalt;
 import com.baiyajin.util.JWT;
 import com.baiyajin.util.PhoneUtils;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+@Api("前端用户")
 @Controller
 @RequestMapping("/PageUserController")
 public class PageUserController {

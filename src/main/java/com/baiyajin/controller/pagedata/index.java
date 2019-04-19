@@ -1,5 +1,6 @@
 package com.baiyajin.controller.pagedata;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,13 +12,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
-
+@Api("主页")
 @Controller
 @RequestMapping("/index")
 public class index {
 
 
-    @ApiOperation(value = "后台登录主页地址:{/templates/test/index.html}",notes = "test后台登录主页地址:{/templates/test/index.html}")
+    @ApiOperation(value = "后台登录主页地址:{http://192.168.8.19:8018/templates/test/index.html}",notes = "test后台登录主页地址:{http://192.168.8.19:8018/templates/test/index.html}")
     @RequestMapping(value = "/test1", method = {RequestMethod.POST}, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String test(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String,Object> map) {

@@ -10,6 +10,7 @@ import com.baiyajin.vo.pagedata.Page;
 import com.baiyajin.vo.pagedata.ReportVo;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import io.jsonwebtoken.Claims;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -31,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+@Api("报告")
 @Controller
 @RequestMapping("/PageReportController")
 public class PageReportController {

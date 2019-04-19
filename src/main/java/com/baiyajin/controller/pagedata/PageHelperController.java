@@ -7,6 +7,7 @@ import com.baiyajin.util.Results;
 import com.baiyajin.vo.pagedata.HelperVo;
 import com.baiyajin.vo.pagedata.Page;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -23,6 +24,7 @@ import com.baiyajin.util.IdGenerate;
 
 import java.sql.Timestamp;
 
+@Api("帮助")
 @Controller
 @RequestMapping(value = "/pageHelperController")
 public class PageHelperController {
