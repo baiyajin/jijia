@@ -1,5 +1,5 @@
 web:
-  file-path: file:/home/
+  file_home: file:/home/
   IP: localhost
   #  IP: 192.168.8.29
   #  IP: 192.168.8.19
@@ -37,7 +37,7 @@ spring:
   mvc:
     static-path-pattern: /**
   resources:
-    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:${web.file-path}
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:${web.file_home}
 
 
 #  servlet:

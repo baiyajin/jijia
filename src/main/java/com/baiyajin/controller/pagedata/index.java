@@ -24,11 +24,11 @@ public class index {
         return "/templates/test/index.html";
     }
 
-    @ApiOperation(value = "大屏主页地址:{/templates/distD/index.html}",notes = "大屏主页地址:{/templates/distD/index.html}")
+    @ApiOperation(value = "大屏主页地址:{http://192.168.8.19:8018/home/dist/index.html}",notes = "大屏主页地址:{http://192.168.8.19:8018/home/dist/index.html}")
     @RequestMapping(value = "/test2", method = {RequestMethod.POST}, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String distD(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String,Object> map) {
-        return "/templates/distD/index.html";
+        return "http://192.168.8.19:8018/home/dist/index.html#/";
     }
 
     @ApiOperation(value = "小屏主页地址:{/templates/distX/index.html}",notes = "小屏主页地址:{/templates/distX/index.html}")
