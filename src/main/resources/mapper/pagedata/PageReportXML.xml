@@ -8,8 +8,10 @@
         a.`name` AS "title",
         a.type AS "type",
         a.userID,
-        a.createTime AS "createTime"
+        a.createTime AS "createTime",
+        b.`name` as "materialName"
         FROM page_report a
+        LEFT JOIN hlidx_category b ON a.materialClassID = b.id
         WHERE
         a.statusID = "qy"
         <if test="type !=null and type != ''">
