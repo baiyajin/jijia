@@ -45,7 +45,7 @@
 
     <select id="getMaterialsAndClass" parameterType="java.util.Map" resultMap="MaterialAndClass">
         select m.id,m.name,i.mcid as mid,mname,i2.price,exponent,tongbi,huanbi,m.level from (
-          select * from hlidx_category where path like concat('%',ifnull(#{id},''),'%')
+          select * from hlidx_category where path like concat('%',ifnull(#{id},''),'%') and is_del = 0
         ) m
         left join
         hl_main_material i on m.id=i.c3
@@ -58,9 +58,9 @@
 
     <select id="getMaterialsClass" parameterType="java.util.Map" resultMap="MaterialAndClass">
         select m.id,m.name,i.name as  mname,i.id as mid,m.level from
-          hlidx_category m
+          (select * from hlidx_category where is_del = 0)  m
         left join
-          hlidx_category i
+         (select * from hlidx_category where is_del = 0) i
         on m.id=i.pid
         where m.pid = 0
 
@@ -99,7 +99,7 @@
 
     <select id="getMaterialsInfoByArea"  parameterType="java.util.Map" resultType="java.util.Map">
         select * from page_material_pice
-        where city = #{area}
+        where city = #{area} and is_del = 0
         <if test="matPid !=null and matPid != ''">
            and mat_pid = #{matPid}
         </if>
@@ -154,6 +154,7 @@
         left join
         (select * from page_material_pice
         <where>
+              and is_del = 0
             <if test="area !=null and area != ''">
                 and find_in_set(area,#{area})
             </if>
