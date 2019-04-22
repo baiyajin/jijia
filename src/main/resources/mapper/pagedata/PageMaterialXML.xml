@@ -106,14 +106,18 @@
             and find_in_set(level,#{level})
         </if>
 
-        <if test="stratDate !=null and stratDate != ''">
-            and  mdate >= #{stratDate}
+        <if test="startDate !=null and startDate != ''">
+            and  mdate >= #{startDate}
         </if>
         <if test="endDate !=null and endDate != ''">
             <![CDATA[
                 and  mdate <= #{endDate}
                 ]]>
         </if>
+        <if test="type !=null and type != ''">
+            and type = #{type}
+        </if>
+
         order by mid
 
     </select>
