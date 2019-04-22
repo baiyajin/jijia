@@ -123,9 +123,7 @@ public class PageReportController {
     @RequestMapping(value = "/updateReport",method = RequestMethod.POST)
     @ResponseBody
     @Transactional(rollbackFor = Exception.class)
-    public Object updateReport(PageReport pageReport,@RequestParam("startTimeStr") String startTimeStr,@RequestParam("endTimeStr")String endTimeStr){
-
-
+    public Object updateReport(PageReport pageReport,@RequestParam(value = "startTimeStr",required = false) String startTimeStr,@RequestParam(value = "endTimeStr",required = false)String endTimeStr){
         String id = pageReport.getId();
         PageReport p = pageReportInterface.selectById(id);
         if(p == null){
@@ -137,7 +135,8 @@ public class PageReportController {
             Date endDate =  DateUtils.parseDate(endTimeStr,"yyyy-MM");
             String lastDay = DateUtils.getDateLastDay(endDate);
             Date endTimeDate = DateUtils.parseDate(lastDay,"yyyy-MM-dd");
-            pageReport.setEndTime(DateUtils.parseDate(lastDay,"yyyy-MM-dd"));
+//            pageReport.setEndTime(DateUtils.parseDate(lastDay,"yyyy-MM-dd"));
+            pageReport.setEndTime(endTimeDate);
         }
 
         pageReport.setUpdateTime(new Timestamp(System.currentTimeMillis()));
