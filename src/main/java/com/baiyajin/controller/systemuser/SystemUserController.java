@@ -160,11 +160,12 @@ public class SystemUserController {
 
                 if(systemUsers.size() > 0 && systemUsers.get(0).getPassword().equals(ecPassWord)){
                     m.put("message","登录成功");
+                    m.put("result",0);
                     systemUsers.get(0).setToken(JWT.createJWT(systemUsers.get(0).getId()));
                     m.put("user",systemUsers.get(0));
                     return m;
                 }else if(systemUsers.size() == 0){
-                    m.put("message","此手机号还没注册");
+                    m.put("message","此手机号未注册");
                     return m;
                 }else if(!systemUsers.get(0).getPassword().equals(ecPassWord)){
                     m.put("message","密码错误");
