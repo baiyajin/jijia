@@ -9,8 +9,8 @@
 	<name>baiyajin</name>
 	<description>baiyajin business project for Spring Boot</description>
 
-	<!--<packaging>jar</packaging>-->
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
+	<!--<packaging>war</packaging>-->
 
 
 
@@ -41,24 +41,24 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 			<!-- war包部署移除嵌入式tomcat插件 -->
-			<exclusions>
+			<!--<exclusions>
 				<exclusion>
 					<groupId>org.springframework.boot</groupId>
 					<artifactId>spring-boot-starter-tomcat</artifactId>
 				</exclusion>
-			</exclusions>
+			</exclusions>-->
 		</dependency>
 
 
 
 		<!--添加servlet-api的依赖,保证编译正确添加对Servlet-api的依赖,任选其一-->
 		<!-- war包部署添加servlet依赖 -->
-		<dependency>
+		<!--<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.1.0</version>
 			<scope>provided</scope>
-		</dependency>
+		</dependency>-->
 
 
 		<!--在pom.xml中添加依赖，将scope状态修改为provided-->
