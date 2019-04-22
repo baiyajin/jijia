@@ -8,6 +8,7 @@
         <result column="statusID" property="statusID"></result>
         <result column="createTime" property="createTime"></result>
         <result column="updateTime" property="updateTime"></result>
+        <result column="level" property="level"></result>
         <collection column="materialClassID" property="childrenList"
                     ofType="com.baiyajin.entity.pagedata.PageMaterial">
             <id column="mid"  property="id"></id>
@@ -43,7 +44,7 @@
 
 
     <select id="getMaterialsAndClass" parameterType="java.util.Map" resultMap="MaterialAndClass">
-        select m.id,m.name,i.mcid as mid,mname,i2.price,exponent,tongbi,huanbi from (
+        select m.id,m.name,i.mcid as mid,mname,i2.price,exponent,tongbi,huanbi,m.level from (
           select * from hlidx_category where path like concat('%',ifnull(#{id},''),'%')
         ) m
         left join
@@ -56,7 +57,7 @@
 
 
     <select id="getMaterialsClass" parameterType="java.util.Map" resultMap="MaterialAndClass">
-        select m.id,m.name,i.name as  mname,i.id as mid from
+        select m.id,m.name,i.name as  mname,i.id as mid,m.level from
           hlidx_category m
         left join
           hlidx_category i
@@ -106,14 +107,18 @@
             and find_in_set(level,#{level})
         </if>
 
-        <if test="stratDate !=null and stratDate != ''">
-            and  mdate >= #{stratDate}
+        <if test="startDate !=null and startDate != ''">
+            and  mdate >= #{startDate}
         </if>
         <if test="endDate !=null and endDate != ''">
             <![CDATA[
                 and  mdate <= #{endDate}
                 ]]>
         </if>
+        <if test="type !=null and type != ''">
+            and type = #{type}
+        </if>
+
         order by mid
 
     </select>

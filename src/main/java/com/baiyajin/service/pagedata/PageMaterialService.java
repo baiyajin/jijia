@@ -101,6 +101,17 @@ public class PageMaterialService extends ServiceImpl<PageMaterialMapper,PageMate
         if (map.get("area")==null || map.get("area").toString().equals("")){
             map.put("area","53");
         }
+       
+        if(map.get("startDate")!=null){
+            Date stDate1 =  DateFormatUtil.stringToDate(map.get("startDate").toString(),"yyyy-MM");
+            stDate1 =  DateFormatUtil.setDate(stDate1,5,1);
+            map.put("startDate",DateFormatUtil.dateToString(stDate1));
+        }
+        if(map.get("endDate")!=null){
+            Date endDate =  DateFormatUtil.stringToDate(map.get("endDate").toString(),"yyyy-MM");
+            String lastDay = DateFormatUtil.getDateLastDay(endDate);
+            map.put("endDate",lastDay);
+        }
            // throw new CustomException("参数错误","-1");
 //       String areas = map.get("areas").toString();
 //
