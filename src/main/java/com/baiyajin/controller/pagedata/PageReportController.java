@@ -135,7 +135,6 @@ public class PageReportController {
             Date endDate =  DateUtils.parseDate(endTimeStr,"yyyy-MM");
             String lastDay = DateUtils.getDateLastDay(endDate);
             Date endTimeDate = DateUtils.parseDate(lastDay,"yyyy-MM-dd");
-//            pageReport.setEndTime(DateUtils.parseDate(lastDay,"yyyy-MM-dd"));
             pageReport.setEndTime(endTimeDate);
         }
 
