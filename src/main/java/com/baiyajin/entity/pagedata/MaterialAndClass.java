@@ -9,6 +9,7 @@ import java.util.List;
 @Data
 public class MaterialAndClass extends PageMaterialClass {
 
+    private String level;
     private List<PageMaterial> childrenList;
 
 
