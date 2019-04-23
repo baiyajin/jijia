@@ -10,8 +10,8 @@ web:
 #spring
 spring:
   profiles:
-#      active: test
-      active: production
+      active: test
+#      active: production
 #      active: develop
   freemarker:
     allow-request-override: false #页面热加载
