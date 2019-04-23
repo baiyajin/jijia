@@ -228,13 +228,13 @@
 
 
 		<!--添加外部依赖-->
-		<dependency>
+		<!--<dependency>
 			<groupId>websocket-api</groupId>
 			<artifactId>websocket-api</artifactId>
 			<version>1.0</version>
 			<scope>system</scope>
 			<systemPath>${basedir}/src/main/resources/static/lib/websocket-api.jar</systemPath>
-		</dependency>
+		</dependency>-->
 
 
 		<!-- 从数据库获取数据封装成流返回给前端下载 -->

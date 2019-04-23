@@ -1,6 +1,7 @@
 web:
   file_home: file:/home/
   IP: localhost
+#  IP: 182.247.245.27
   #  IP: 192.168.8.29
   #  IP: 192.168.8.19
   packaging: war
@@ -9,8 +10,8 @@ web:
 #spring
 spring:
   profiles:
-      active: test
-#      active: production
+#      active: test
+      active: production
 #      active: develop
   freemarker:
     allow-request-override: false #页面热加载
@@ -52,6 +53,7 @@ logging:
 
 #mybatis plus 设置
 mybatis-plus:
+#  mapper-locations: classpath:mapper/*/*.xml
   mapper-locations: classpath:mapper/*/*.xml
   typeAliasesPackage: com.baiyajin.entity #实体扫描，多个package用逗号或者分号分隔
   global-config.refresh-mapper: true #刷新mapper 调试神器

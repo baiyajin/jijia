@@ -18,7 +18,7 @@ import java.util.Map;
 public class index {
 
 
-    @ApiOperation(value = "后台登录主页地址:http://192.168.8.19:8018/templates/test/index.html",notes = "后台登录主页地址:http://192.168.8.19:8018/templates/test/index.html")
+    @ApiOperation(value = "后台登录主页地址:http://182.247.245.27:8017/templates/test/index.html",notes = "后台登录主页地址:http://182.247.245.27:8017/templates/test/index.html")
     @RequestMapping(value = "/test1", method = {RequestMethod.POST}, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public void test(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String,Object> map) {
@@ -30,13 +30,13 @@ public class index {
     public void test4(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String,Object> map) {
     }
 
-    @ApiOperation(value = "大屏主页地址:http://192.168.8.19:8018/home/distD/index.html",notes = "大屏主页地址:http://192.168.8.19:8018/home/distD/index.html")
+    @ApiOperation(value = "大屏主页地址:http://182.247.245.27:8017/home/distD/index.html",notes = "大屏主页地址:http://182.247.245.27:8017/home/distD/index.html")
     @RequestMapping(value = "/test2", method = {RequestMethod.POST}, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public void distD(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String,Object> map) {
     }
 
-    @ApiOperation(value = "小屏主页地址:http://192.168.8.19:8018/home/distX/index.html",notes = "小屏主页地址:http://192.168.8.19:8018/home/distX/index.html")
+    @ApiOperation(value = "小屏主页地址:http://182.247.245.27:8017/home/distX/index.html",notes = "小屏主页地址:http://182.247.245.27:8017/home/distX/index.html")
     @RequestMapping(value = "/test3", method = {RequestMethod.POST}, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public void distX(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String,Object> map) {
